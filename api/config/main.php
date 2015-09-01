@@ -11,6 +11,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'api\controllers',
+	'layout' => false,
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',

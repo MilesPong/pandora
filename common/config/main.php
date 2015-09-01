@@ -8,5 +8,19 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+		'formatter' => [ 
+				'class' => 'yii\i18n\Formatter',
+				'dateFormat' => 'yyyy-MM-dd',
+				'datetimeFormat' => 'php:Y-m-d H:i:s',
+				'timeFormat' => 'php:H:i:s',
+				'decimalSeparator' => ',',
+				'thousandSeparator' => ' ',
+				'currencyCode' => 'CNY' 
+		],
+		'urlManager' => [ 
+				'enablePrettyUrl' => true,
+				'showScriptName' => false 
+				// 'enableStrictParsing' => false,
+		],
     ],
 ];
