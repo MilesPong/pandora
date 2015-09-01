@@ -11,11 +11,29 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+	'modules' => [
+			'user' => [
+					// following line will restrict access to admin page
+					'as frontend' => 'dektrium\user\filters\FrontendFilter'
+			]
+	],
     'components' => [
         'user' => [
-            'identityClass' => 'common\models\User',
+//             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
+			'identityCookie' => [ 
+					'name' => '_frontendIdentity',
+					'path' => '/',
+					'httpOnly' => true 
+			],
         ],
+		'session' => [ 
+				'name' => 'FRONTENDSESSID',
+				'cookieParams' => [ 
+						'httpOnly' => true,
+						'path' => '/' 
+				] 
+		],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [

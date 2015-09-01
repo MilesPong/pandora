@@ -11,12 +11,34 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+    		// Configuration Yii2-User Backend //
+    		'user' => [
+    				//following line will restrict access to admin page
+//     				'as backend' => 'dektrium\user\filters\BackendFilter',
+    		],
+    		'utility' => [
+    				'class' => 'c006\utility\migration\Module',
+    		],
+    ],
     'components' => [
         'user' => [
-            'identityClass' => 'common\models\User',
+//             'identityClass' => 'common\models\User',
+//         		'identityClass' => 'dektrium\user\models\User',
             'enableAutoLogin' => true,
+			'identityCookie' => [ 
+					'name' => '_backendIdentity',
+					'path' => '/',
+					'httpOnly' => true 
+			],
         ],
+		'session' => [ 
+				'name' => 'BACKENDSESSID',
+				'cookieParams' => [ 
+						'httpOnly' => true,
+						'path' => '/' 
+				] 
+		],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [

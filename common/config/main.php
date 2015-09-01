@@ -18,9 +18,28 @@ return [
 				'currencyCode' => 'CNY' 
 		],
 		'urlManager' => [ 
+				// here is your backend URL rules
 				'enablePrettyUrl' => true,
-				'showScriptName' => false 
+				'showScriptName' => false,
+// 				'suffix'=>'.html',
 				// 'enableStrictParsing' => false,
 		],
+// 		'urlManagerFrontend' => [ 
+// 				// here is your Front-end URL rules
+// 				'class' => 'yii\web\urlManager',
+// 				'baseUrl' => '/a/frontend/web',
+// 				'enablePrettyUrl' => true,
+// 				'showScriptName' => false,
+// // 				'enableStrictParsing' => true,
+// 		],
     ],
+	'modules' => [
+			'user' => [
+					'class' => 'dektrium\user\Module',
+					'admins' => ['admin', 'miles'],					
+					// you will configure your module inside this file
+					// or if need different configuration for frontend and backend you may
+					// configure in needed configs
+			],
+	],
 ];
