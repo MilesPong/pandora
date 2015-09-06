@@ -44,6 +44,7 @@ AppAsset::register($this);
     				['label' => 'Register', 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest],
     	['label' => 'Profile', 'url' => ['/user/settings/profile'], 'visible' => !Yii::$app->user->isGuest],
     	['label' => 'Management', 'url' => ['/user/admin'], 'visible' => !Yii::$app->user->isGuest],
+    	['label' => 'Admin', 'url' => ['/admin'], 'visible' => !Yii::$app->user->isGuest],
     ];
 //     if (Yii::$app->user->isGuest) {
 //         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
