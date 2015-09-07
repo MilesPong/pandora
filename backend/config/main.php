@@ -16,6 +16,13 @@ return [
     		'user' => [
     				//following line will restrict access to admin page
 //     				'as backend' => 'dektrium\user\filters\BackendFilter',
+//     				'class' => 'dektrium\user\Module',
+    				'controllerMap' => [
+    						'security' => 'backend\controllers\SecurityController'
+    				],
+    				'enableRegistration' => false,
+    				'enableConfirmation' => false,
+    				'enablePasswordRecovery' => false,
     		],
     		'utility' => [
     				'class' => 'c006\utility\migration\Module',
@@ -51,12 +58,19 @@ return [
 					'path' => '/',
 					'httpOnly' => true 
 			],
-        ],
+        ],    		
 		'session' => [ 
 				'name' => 'BACKENDSESSID',
 				'cookieParams' => [ 
 						'httpOnly' => true,
 						'path' => '/' 
+				] 
+		],
+		'view' => [ 
+				'theme' => [ 
+						'pathMap' => [ 
+								'@dektrium/user/views' => '@backend/views/user' 
+						] 
 				] 
 		],
         'log' => [

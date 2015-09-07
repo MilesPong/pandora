@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\search\UserInfoSearch */
@@ -27,46 +28,44 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
 //             ['class' => 'yii\grid\SerialColumn'],
             'uid',
-            [
-        		'attribute' => 'user_id',            		
-        		'value' => function ($model) {
-        			return $model->user['username'];
-        		}
-        	],
             'truename',
-        	'birthday:date',
-//         		[
-//         		'attribute' => 'birthday',
-//         		'value' => function ($model) {
-//         			return Yii::t('app', '{0, date, MMMM dd, YYYY}', [$model->birthday]);
-//         		},
-//         		'filter' => DatePicker::widget([
-//         				'model'      => $searchModel,
-//         				'attribute'  => 'birthday',
-//         				'dateFormat' => 'php:Y-m-d',
-//         				'options' => [
-//         						'class' => 'form-control'
-//         				]
-//         		]),
-//         		],
+        	[
+        		'attribute' => 'user_id',
+        		'value' => 'user.username'
+        	],
+//         	'birthday:date',
+        	[
+        	'attribute' => 'birthday',
+        	'value' => function ($model) {
+        		if ($model->birthday){
+	        		return Yii::t('app', '{0, date, YYYY-MM-dd}', [$model->birthday]);        			
+        		}
+        	},
+        	'filter' => DatePicker::widget([
+        			'model'      => $searchModel,
+        			'attribute'  => 'birthday',
+        			'dateFormat' => 'php:Y-m-d',
+        			'options' => [
+        					'class' => 'form-control'
+        			]
+        	]),
+        	],
             'phone',
             'email:email',
             'qq',
-            'address',
+//             'address',
 //         	[
 //         		'attribute' => 'team_id',
-//         		'value' => function ($model) {
-//         			return $model->team['team_name'];
-//         		}
+//         		'value' => 'team.team_name'
 //         	],
 //             'gravtar',
 //             'memo:ntext',
-            [
-            'attribute' => 'status',
-            'value' => function ($model) {
-            	return $model->status == Yii::$app->params['active']? Yii::t('app', 'Active') : Yii::t('app', 'Inactive') ;
-            }
-            ],
+//             [
+//             'attribute' => 'status',
+//             'value' => function ($model) {
+//             	return $model->status == Yii::$app->params['active']? Yii::t('app', 'Active') : Yii::t('app', 'Inactive') ;
+//             }
+//             ],
             [
             'header' => Yii::t('app', 'Change status'),
             'value' => function ($model) {

@@ -26,4 +26,18 @@ class BaseModel extends \yii\db\ActiveRecord
 	{
 		return (bool) $this->updateAttributes(['status' => \Yii::$app->params['active']]);
 	}
+	
+	/**
+	 * Soft delete data with ablity to recover
+	 */
+	public function softDelete()
+	{
+		return (bool) $this->updateAttributes(['status' => \Yii::$app->params['deleted']]);
+	}
+	
+	public function beforeDelete()
+	{
+		$this->softDelete();
+		return false;		
+	}
 }

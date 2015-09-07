@@ -3,17 +3,18 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\UserInfo;
-use common\models\search\UserInfoSearch;
+use common\models\AreaInfo;
+use common\models\search\AreaInfoSearch;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\helpers\Url;
 use common\core\BaseController;
+use yii\helpers\Url;
 
 /**
- * UserInfoController implements the CRUD actions for UserInfo model.
+ * AreaInfoController implements the CRUD actions for AreaInfo model.
  */
-class UserInfoController extends BaseController
+class AreaInfoController extends BaseController
 {
     public function behaviors()
     {
@@ -28,15 +29,14 @@ class UserInfoController extends BaseController
     }
 
     /**
-     * Lists all UserInfo models.
+     * Lists all AreaInfo models.
      * @return mixed
      */
     public function actionIndex()
     {
     	Url::remember('', 'actions-redirect');
-        $searchModel = new UserInfoSearch();
+        $searchModel = new AreaInfoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination->pageSize=6;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -45,7 +45,7 @@ class UserInfoController extends BaseController
     }
 
     /**
-     * Displays a single UserInfo model.
+     * Displays a single AreaInfo model.
      * @param integer $id
      * @return mixed
      */
@@ -57,16 +57,17 @@ class UserInfoController extends BaseController
     }
 
     /**
-     * Creates a new UserInfo model.
+     * Creates a new AreaInfo model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new UserInfo();
+        $model = new AreaInfo();
+        $model->loadDefaultValues();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->uid]);
+            return $this->redirect(['view', 'id' => $model->area_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -75,7 +76,7 @@ class UserInfoController extends BaseController
     }
 
     /**
-     * Updates an existing UserInfo model.
+     * Updates an existing AreaInfo model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -85,7 +86,7 @@ class UserInfoController extends BaseController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->uid]);
+            return $this->redirect(['view', 'id' => $model->area_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -94,7 +95,7 @@ class UserInfoController extends BaseController
     }
 
     /**
-     * Deletes an existing UserInfo model.
+     * Deletes an existing AreaInfo model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -107,19 +108,18 @@ class UserInfoController extends BaseController
     }
 
     /**
-     * Finds the UserInfo model based on its primary key value.
+     * Finds the AreaInfo model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return UserInfo the loaded model
+     * @return AreaInfo the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = UserInfo::findOne($id)) !== null) {
+        if (($model = AreaInfo::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-
 }
