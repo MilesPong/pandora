@@ -29,4 +29,20 @@ class BaseController extends Controller
 	
 		return $this->redirect(Url::previous('actions-redirect'));
 	}
+	
+	/**
+	 * Revert the info.
+	 *
+	 * @param integer $id
+	 * @return Response
+	 */
+	public function actionRevert($id) {
+		$model = $this->findModel ( $id );
+		if ($model->getIsDeleted ()) {
+			$model->revert ();
+			Yii::$app->getSession ()->setFlash ( 'success', Yii::t ( 'app', 'Info has been revert'));
+		}
+	
+		return $this->redirect(Url::previous('actions-redirect'));
+	}
 }

@@ -69,17 +69,23 @@ $this->params['breadcrumbs'][] = $this->title;
             [
             'header' => Yii::t('app', 'Change status'),
             'value' => function ($model) {
-            	if (!$model->status) {
+            	if ($model->status == Yii::$app->params['inactive']) {
             		return Html::a(Yii::t('app', 'Unblock'), ['block', 'id' => $model->uid], [
             				'class' => 'btn btn-xs btn-success btn-block',
             				'data-method' => 'post',
             				'data-confirm' => Yii::t('app', 'Are you sure you want to unblock this user?')
             		]);
-            	} else {
+            	} else if($model->status == Yii::$app->params['active']){
             		return Html::a(Yii::t('app', 'Block'), ['block', 'id' => $model->uid], [
             				'class' => 'btn btn-xs btn-danger btn-block',
             				'data-method' => 'post',
             				'data-confirm' => Yii::t('app', 'Are you sure you want to block this user?')
+            		]);
+            	}else if($model->status ==Yii::$app->params['deleted']){
+            		return Html::a(Yii::t('app', 'Revert'), ['revert', 'id' => $model->uid], [
+            				'class' => 'btn btn-xs btn-warning btn-block',
+            				'data-method' => 'post',
+            				'data-confirm' => Yii::t('app', 'Are you sure you want to revert this user?')
             		]);
             	}
             },
@@ -88,7 +94,8 @@ $this->params['breadcrumbs'][] = $this->title;
             [
             		'header' => Yii::t('app', Yii::t('app', 'Action')),
             		'headerOptions' => ['width' => '70'],
-            		'class' => 'yii\grid\ActionColumn'           		
+            		'class' => 'yii\grid\ActionColumn',       
+            		'template' => '{view} {update} {delete}'
             ],
         ],
     ]); ?>

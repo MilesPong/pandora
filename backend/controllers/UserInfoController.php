@@ -35,6 +35,8 @@ class UserInfoController extends BaseController
     {
     	Url::remember('', 'actions-redirect');
         $searchModel = new UserInfoSearch();
+        if(Yii::$app->request->get('recycle'))
+        	$searchModel->status = Yii::$app->params['deleted'];
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize=6;
 
@@ -87,6 +89,8 @@ class UserInfoController extends BaseController
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->uid]);
         } else {
+        	if ($model->status == \Yii::$app->params['deleted'])
+        		return $this->redirect(Url::previous('actions-redirect'));
             return $this->render('update', [
                 'model' => $model,
             ]);
