@@ -10,7 +10,13 @@ use yii\jui\DatePicker;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'User Infos');
-$this->params['breadcrumbs'][] = $this->title;
+// $this->params['breadcrumbs'][] = $this->title;
+if (Yii::$app->controller->action->id == 'trash') {
+	$this->params['breadcrumbs'][] = ['label'=>$this->title, 'url' => ['index']];
+	$this->params['breadcrumbs'][] = Yii::t('app', 'Trash');	
+} else {
+	$this->params['breadcrumbs'][] = $this->title;
+}
 ?>
 <div class="user-info-index">
 

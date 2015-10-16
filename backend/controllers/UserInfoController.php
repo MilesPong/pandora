@@ -35,8 +35,6 @@ class UserInfoController extends BaseController
     {
     	Url::remember('', 'actions-redirect');
         $searchModel = new UserInfoSearch();
-        if(Yii::$app->request->get('recycle'))
-        	$searchModel->status = Yii::$app->params['deleted'];
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize=6;
 
@@ -44,6 +42,25 @@ class UserInfoController extends BaseController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+    
+    /**
+     * TODO This funciton should be combined with index function 
+     * Lists all Deleted UserInfo models.
+     * @return mixed
+     */
+    public function actionTrash()
+    {
+    	Url::remember('', 'actions-redirect');
+    	$searchModel = new UserInfoSearch();
+    	$searchModel->status = Yii::$app->params['deleted'];
+    	$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    	$dataProvider->pagination->pageSize=6;
+    
+    	return $this->render('index', [
+    			'searchModel' => $searchModel,
+    			'dataProvider' => $dataProvider,
+    	]);
     }
 
     /**
