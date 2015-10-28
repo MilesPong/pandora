@@ -21,7 +21,7 @@ class UserInfoSearch extends UserInfo
     {
         return [
             [['uid', 'team_id', 'created_at', 'updated_at'], 'integer'],
-            [['user_id', 'truename', 'phone', 'email', 'qq', 'address', 'gravtar', 'memo', 'status', 'birthday'], 'safe'],
+            [['user_id', 'truename', 'phone', 'email', 'qq', 'address', 'avatar', 'memo', 'status', 'birthday'], 'safe'],
         ];
     }
 
@@ -91,7 +91,7 @@ class UserInfoSearch extends UserInfo
             ->andFilterWhere(['like', 't.email', $this->email])
             ->andFilterWhere(['like', 'qq', $this->qq])
             ->andFilterWhere(['like', 'address', $this->address])
-            ->andFilterWhere(['like', 'gravtar', $this->gravtar])
+            ->andFilterWhere(['like', 'avatar', $this->avatar])
             ->andFilterWhere(['like', 'memo', $this->memo])
             ->andFilterWhere(['like', 'status', $this->status])
        		->andFilterWhere(['like', 'u.username', $this->user_id]);

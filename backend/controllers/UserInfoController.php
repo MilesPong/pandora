@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use common\core\BaseController;
 use yii\base\Object;
+use yii\web\UploadedFile;
 
 /**
  * UserInfoController implements the CRUD actions for UserInfo model.
@@ -85,8 +86,12 @@ class UserInfoController extends BaseController
     {
         $model = new UserInfo();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->uid]);
+        if ($model->load(Yii::$app->request->post())) {
+        	list($image,$path) = $this->saveImage($model);
+        	if ($model->save()){
+        		$image->saveAs($path);
+        		return $this->redirect(['view', 'id' => $model->uid]);
+        	}
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -104,8 +109,12 @@ class UserInfoController extends BaseController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->uid]);
+        if ($model->load(Yii::$app->request->post())) {
+        	list($image,$path) = $this->saveImage($model);
+        	if ($model->save()){
+        		$image->saveAs($path);
+	            return $this->redirect(['view', 'id' => $model->uid]);
+        	}
         } else {
         	if ($model->status == \Yii::$app->params['deleted'])
         		return $this->redirect(Url::previous('actions-redirect'));
@@ -158,6 +167,30 @@ class UserInfoController extends BaseController
     	}
     
     	return $this->render('upload', ['model' => $model]);
+    }
+    
+    /**
+     * To save user profile image
+     * @param UserInfo $model
+     * @return boolean
+     */
+    protected function saveImage($model)
+    {
+    		$pathFolder = Yii::getAlias('@avatar');
+    		if ( !is_dir($pathFolder) && !mkdir($pathFolder, 0775)){
+    			throw new \Exception('Could not create directory.');
+    		}
+    		
+    	    $image = UploadedFile::getInstance($model, 'image');
+        	$ext = end((explode(".", $image->name)));
+        	 
+        	// generate a unique file name
+        	$model->avatar = Yii::$app->security->generateRandomString().".{$ext}";
+        	
+        	// the path to save file
+        	$path = $pathFolder . DIRECTORY_SEPARATOR . $model->avatar;
+        	
+        	return [$image, $path];
     }
 
 }

@@ -33,7 +33,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'team_id') ?>
 
-    <?php // echo $form->field($model, 'gravtar') ?>
+    <?php // echo $form->field($model, 'avatar') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 

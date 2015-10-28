@@ -146,7 +146,7 @@ class m150906_023806_create_pandora_init_tables extends Migration
     					'qq' => 'VARCHAR(15) NULL',
     					'address' => 'VARCHAR(255) NULL',
     					'team_id' => 'INT(10) UNSIGNED NULL',
-    					'gravtar' => 'VARCHAR(255) NULL',
+    					'avatar' => 'VARCHAR(255) NULL',
     					'created_at' => 'INT(11) UNSIGNED NOT NULL',
     					'updated_at' => 'INT(11) UNSIGNED NOT NULL',
     					'memo' => 'TEXT NULL',

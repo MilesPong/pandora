@@ -20,7 +20,7 @@ use yii\helpers\ArrayHelper;
  * @property string $qq
  * @property string $address
  * @property integer $team_id
- * @property string $gravtar
+ * @property string $avatar
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $memo
@@ -33,6 +33,12 @@ use yii\helpers\ArrayHelper;
  */
 class UserInfo extends \common\core\BaseModel
 {
+	/**
+	 * @var mixed image the attribute for rendering the file input
+	 * widget for upload on the form
+	 */
+	public $image;
+	
     /**
      * @inheritdoc
      */
@@ -52,7 +58,7 @@ class UserInfo extends \common\core\BaseModel
             [['memo', 'status'], 'string'],
             [['truename'], 'string', 'max' => 25],
             [['phone'], 'string', 'max' => 32],
-            [['email', 'address', 'gravtar'], 'string', 'max' => 255],
+            [['email', 'address', 'avatar'], 'string', 'max' => 255],
             [['qq'], 'string', 'max' => 15],
             [['team_id'], 'exist', 'skipOnError' => true, 'targetClass' => TeamInfo::className(), 'targetAttribute' => ['team_id' => 'team_id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -60,12 +66,13 @@ class UserInfo extends \common\core\BaseModel
         	[['phone'], 'match' , 'pattern' =>'/^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/',
         		'message' => Yii::t('app', 'Your phone number is invalid.')],
         	[['phone'], 'unique' , 'message' => Yii::t('app', 'Your phone number has been used.')],
-        	[['phone', 'truename', 'email', 'qq', 'address', 'gravtar'], 'filter' , 'filter' => 'trim'],
+        	[['phone', 'truename', 'email', 'qq', 'address', 'avatar'], 'filter' , 'filter' => 'trim'],
         	['birthday', 'date', 'timestampAttribute' => 'birthday'],
         	'emailPattern' => ['email', 'email'],
         	'emailLength' => ['email', 'string', 'max' => 255],
-        	'emailUnique' => ['email', 'unique'],
-        	[['phone', 'truename', 'email', 'qq', 'address', 'gravtar'], 'filter' , 'filter' => 'trim'],
+        	'emailUnique' => ['email', 'unique'],        		
+        	[['image'], 'safe'],
+        	[['image'], 'file', 'extensions'=>'jpg, gif, png'],
         ];
     }
 
@@ -84,7 +91,7 @@ class UserInfo extends \common\core\BaseModel
             'qq' => Yii::t('app', 'QQ'),
             'address' => Yii::t('app', 'Address'),
             'team_id' => Yii::t('app', 'Team'),
-            'gravtar' => Yii::t('app', 'Gravtar'),
+            'avatar' => Yii::t('app', 'Avatar'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
             'memo' => Yii::t('app', 'Memo'),
@@ -162,10 +169,20 @@ class UserInfo extends \common\core\BaseModel
     {
     	if (parent::beforeSave($insert)) {
     		// Place your custom code here
-    
+    		
     		return true;
     	} else {
     		return false;
     	}
+    }
+    
+    /**
+     * @return Image Url
+     */
+    public function getImageUrl()
+    {
+    	if ($this->avatar)
+    		return \Yii::$app->urlManagerFrontend->createUrl('uploads/avatar').DIRECTORY_SEPARATOR.$this->avatar;
+    	return null;
     }
 }

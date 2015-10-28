@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
         		'attribute' => 'team_id',
         		'value' => $model->team['team_name']
     		],
-            'gravtar',
+            'avatar',
         	'created_at:datetime',
         	'updated_at:datetime',
             'memo:ntext',

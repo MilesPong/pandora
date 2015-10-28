@@ -28,14 +28,14 @@ return [
 // 				'suffix'=>'.html',
 				// 'enableStrictParsing' => false,
 		],
-// 		'urlManagerFrontend' => [ 
-// 				// here is your Front-end URL rules
-// 				'class' => 'yii\web\urlManager',
-// 				'baseUrl' => '/a/frontend/web',
-// 				'enablePrettyUrl' => true,
-// 				'showScriptName' => false,
-// // 				'enableStrictParsing' => true,
-// 		],
+		'urlManagerFrontend' => [ 
+				// here is your Front-end URL rules
+				'class' => 'yii\web\urlManager',
+				'baseUrl' => 'Your Frondend URL',		//Your Frondend URL,e.g: '//frontend.dev'
+				'enablePrettyUrl' => true,
+				'showScriptName' => false,
+// 				'enableStrictParsing' => true,
+		],
     ],
 	'modules' => [
 			'user' => [

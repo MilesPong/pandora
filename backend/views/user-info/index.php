@@ -64,7 +64,7 @@ if (Yii::$app->controller->action->id == 'trash') {
 //         		'attribute' => 'team_id',
 //         		'value' => 'team.team_name'
 //         	],
-//             'gravtar',
+//             'avatar',
 //             'memo:ntext',
 //             [
 //             'attribute' => 'status',
