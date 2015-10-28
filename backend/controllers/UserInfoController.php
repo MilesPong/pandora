@@ -9,6 +9,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use common\core\BaseController;
+use yii\base\Object;
 
 /**
  * UserInfoController implements the CRUD actions for UserInfo model.
@@ -141,6 +142,22 @@ class UserInfoController extends BaseController
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    
+    public function actionUpload()
+    {
+    	$model = new \common\models\UploadForm();
+
+    	if (Yii::$app->request->isPost) {
+    		$model->imageFile = \yii\web\UploadedFile::getInstance($model, 'imageFile');
+    		if ($model->upload()) {
+    			// file is uploaded successfully
+    			Yii::$app->session->setFlash('uploadSubmitted');
+    			return $this->refresh();
+    		}
+    	}
+    
+    	return $this->render('upload', ['model' => $model]);
     }
 
 }
