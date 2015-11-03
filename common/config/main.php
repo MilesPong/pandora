@@ -22,19 +22,12 @@ return [
     			'class' => 'yii\rbac\DbManager',	
     	],
 		'urlManager' => [ 
-				// here is your backend URL rules
+				// here is your URL rules
 				'enablePrettyUrl' => true,
 				'showScriptName' => false,
+// 				'baseUrl' => $_SERVER['HTTP_HOST'],
 // 				'suffix'=>'.html',
 				// 'enableStrictParsing' => false,
-		],
-		'urlManagerFrontend' => [ 
-				// here is your Front-end URL rules
-				'class' => 'yii\web\urlManager',
-				'baseUrl' => 'Your Frondend URL',		//Your Frondend URL,e.g: '//frontend.dev'
-				'enablePrettyUrl' => true,
-				'showScriptName' => false,
-// 				'enableStrictParsing' => true,
 		],
     ],
 	'modules' => [

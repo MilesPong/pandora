@@ -13,6 +13,12 @@ $this->params['breadcrumbs'][] = ['label' => $model->uid, 'url' => ['view', 'id'
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 
+<?php if (isset($uploadMsg)): ?>
+    <div class="alert alert-danger">
+       <?=$uploadMsg?>
+    </div>
+<?php endif;?>
+
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>

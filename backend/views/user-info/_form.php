@@ -16,7 +16,7 @@ use kartik\file\FileInput;
     		'options' => ['enctype'=>'multipart/form-data']
     ]); ?>
     <!-- Nav tabs -->
-<ul class="nav nav-tabs" role="tablist">
+<ul class="nav nav-tabs" role="tablist" style="margin-bottom: 10px">
   <li class="active"><a href="#general" role="tab" data-toggle="tab"><?= Yii::t('app', 'Profile')?></a></li>
   <li><a href="#photo" role="tab" data-toggle="tab"><?= Yii::t('app', 'Upload Photo')?></a></li>
 </ul>
@@ -59,10 +59,27 @@ use kartik\file\FileInput;
 </div>
   <div class="tab-pane vertical-pad" id="photo">
   <div class="col-lg-9">
-  <?= $form->field($model, 'image')->widget(FileInput::classname(), [
+  <?/* = $form->field($model, 'image')->widget(FileInput::classname(), [
         'options' => ['accept' => 'image/*'],
          'pluginOptions'=>['allowedFileExtensions'=>['jpg','gif','png']],
-    ]);   ?>
+    ]);    */?>
+    <?php 
+    // Customizing the plugin elements (e.g. using a different container to display the caption)
+    echo '<div class="well well-small">';
+    echo FileInput::widget([
+    		'name' => 'UserInfo[image]',
+    		'options' => ['accept' => 'image/*'],
+    		'pluginOptions' => [
+    				'showPreview' => true,
+    				'showCaption' => false,
+    				'elCaptionText' => '#customCaption',
+    				'allowedFileExtensions'=>['jpg','gif','png'],
+    				'maxFileSize' => 2048
+    		]
+    ]);
+    echo '<span id="customCaption" class="text-success">No file selected</span>';
+    echo '</div>';
+    ?>
     </div>
     <div class="col-lg-3">
     <?php if ($model->imageUrl):?>

@@ -58,7 +58,19 @@ return [
 					'path' => '/',
 					'httpOnly' => true 
 			],
-        ],    		
+        ],
+// 		'urlManager' => [ 
+// 				'enablePrettyUrl' => true,
+// 				'showScriptName' => false,
+// 				'class' => 'yii\web\UrlManager' 
+// 		],
+		'urlManagerFrontend' => [
+				//here is your Front-end URL rules
+				'class' => 'yii\web\urlManager',
+				'baseUrl' => 'Your Frontend URL', // Your Frontend URL,e.g: '//frontend.dev'
+				'enablePrettyUrl' => true,
+				'showScriptName' => false 
+		],
 		'session' => [ 
 				'name' => 'BACKENDSESSID',
 				'cookieParams' => [ 

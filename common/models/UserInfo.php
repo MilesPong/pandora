@@ -7,6 +7,7 @@ use dektrium\user\models\User;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "{{%user_info}}".
@@ -72,7 +73,7 @@ class UserInfo extends \common\core\BaseModel
         	'emailLength' => ['email', 'string', 'max' => 255],
         	'emailUnique' => ['email', 'unique'],        		
         	[['image'], 'safe'],
-        	[['image'], 'file', 'extensions'=>'jpg, gif, png'],
+        	[['image'], 'file', 'extensions'=>'jpg, gif, png', 'maxSize'=>'1024 * 1024 * 2'], //Limit maxSize 2MB
         ];
     }
 
@@ -184,5 +185,78 @@ class UserInfo extends \common\core\BaseModel
     	if ($this->avatar)
     		return \Yii::$app->urlManagerFrontend->createUrl('uploads/avatar').DIRECTORY_SEPARATOR.$this->avatar;
     	return null;
+    }
+    
+    /**
+     * fetch stored image file name with complete path
+     * @return string
+     */
+    public function getImageFile()
+    {
+    	return isset($this->avatar) && $this->avatar ? Yii::getAlias('@avatar') . DIRECTORY_SEPARATOR . $this->avatar : null;
+    }
+    
+    /**
+     * Process upload of image
+     *
+     * @return mixed the uploaded image instance
+     */
+    public function uploadImage() {
+    	// get the uploaded file instance. for multiple file uploads
+    	// the following data will return an array (you may need to use
+    	// getInstances method)
+    	$image = UploadedFile::getInstance($this, 'image');
+    
+    	// if no image was uploaded abort the upload
+    	if (empty($image)) {
+    		return false;
+    	}
+    
+    	// generate a unique file name
+    	$ext = end((explode(".", $image->name)));    	
+    	$this->avatar = Yii::$app->security->generateRandomString().".{$ext}";
+    	
+    	// the uploaded image instance
+    	return $image;
+    }
+    
+    /**
+     * Process deletion of image
+     *
+     * @return boolean the status of deletion
+     */
+    public function deleteImage() {
+    	$file = $this->getImageFile();
+    
+    	// check if file exists on server
+    	if (empty($file) || !file_exists($file)) {
+    		return true;
+    	}
+    
+    	// check if uploaded file can be deleted on server
+    	if (!unlink($file)) {
+    		return false;
+    	}
+    
+    	// if deletion successful, reset your file attributes
+    	$this->avatar = null;
+    
+    	return true;
+    }
+    
+    /* (non-PHPdoc)
+     * @see \common\core\BaseModel::beforeDelete()
+     */
+    public function beforeDelete()
+    {
+    	if($this->status == \Yii::$app->params['deleted']){
+// 	    	if (!$this->deleteImage())
+// 	    		throw new \ErrorException('Image can not be deleted');
+    		return true;
+    	}
+    	
+    	
+    	$this->softDelete();
+    	return false;
     }
 }

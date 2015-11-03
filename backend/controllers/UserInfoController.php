@@ -11,6 +11,7 @@ use yii\helpers\Url;
 use common\core\BaseController;
 use yii\base\Object;
 use yii\web\UploadedFile;
+use common\core\UploadException;
 
 /**
  * UserInfoController implements the CRUD actions for UserInfo model.
@@ -76,27 +77,47 @@ class UserInfoController extends BaseController
             'model' => $this->findModel($id),
         ]);
     }
-
-    /**
-     * Creates a new UserInfo model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new UserInfo();
-
-        if ($model->load(Yii::$app->request->post())) {
-        	list($image,$path) = $this->saveImage($model);
-        	if ($model->save()){
-        		$image->saveAs($path);
-        		return $this->redirect(['view', 'id' => $model->uid]);
-        	}
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+	
+	/**
+	 * Creates a new UserInfo model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 * 
+	 * @return mixed
+	 */
+	public function actionCreate() {
+		$model = new UserInfo ();
+		
+		$connection = Yii::$app->db;
+		$transaction = $connection->beginTransaction ();
+		try {
+			if ($model->load ( Yii::$app->request->post () )) {
+				// process uploaded image file instance
+				$image = $model->uploadImage ();
+				
+				if ($model->save ()) {
+					// upload only if valid uploaded file instance found
+					if ($image !== false) {
+						if ($image->error == UPLOAD_ERR_OK) {
+							$path = $model->getImageFile ();
+							$image->saveAs ( $path );
+						} else {
+							throw new UploadException ( $image->error);
+	       				}
+	       			}
+	       			 
+	       			$transaction->commit();
+	       			return $this->redirect(['view', 'id' => $model->uid]);
+	       		}
+	       	}
+       }catch(UploadException $e){
+	       	$transaction->rollBack();
+	       	$uploadMsg = $e->getMessage();
+       }
+       
+       return $this->render('create', [
+       		'model' => $model,
+       		'uploadMsg' => isset($uploadMsg)?$uploadMsg:null,
+       ]);
     }
 
     /**
@@ -108,20 +129,50 @@ class UserInfoController extends BaseController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $oldImageFile = $model->getImageFile();
+        $oldAvatar = $model->avatar;
 
-        if ($model->load(Yii::$app->request->post())) {
-        	list($image,$path) = $this->saveImage($model);
-        	if ($model->save()){
-        		$image->saveAs($path);
-	            return $this->redirect(['view', 'id' => $model->uid]);
-        	}
-        } else {
-        	if ($model->status == \Yii::$app->params['deleted'])
-        		return $this->redirect(Url::previous('actions-redirect'));
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $connection =  Yii::$app->db;
+        $transaction = $connection->beginTransaction();
+        
+        try{
+	        if ($model->load(Yii::$app->request->post())) {
+	        	// process uploaded image file instance
+	        	$image = $model->uploadImage();
+	        	
+	        	if ($model->save()){
+	        		//upload only if valid uploaded file instance found
+        			if ($image === false){
+        				// revert back if no valid file instance uploaded
+        				$model->avatar = $oldAvatar;
+        			}else{
+		        		if ( $image->error == UPLOAD_ERR_OK) { 
+		        			$path = $model->getImageFile();
+		        			$image->saveAs($path);
+		        			@unlink($oldImageFile); //delete old file
+		        		}else{
+		        			throw new UploadException($image->error);
+		        		}
+        			}
+	        		
+	        		$transaction->commit();
+	        		
+		            return $this->redirect(['view', 'id' => $model->uid]);
+	        	}
+	        }
+        }catch(UploadException $e){
+        	$transaction->rollBack();
+        	// revert back if no valid file instance uploaded
+        	$model->avatar = $oldAvatar;        	
+        	$uploadMsg = $e->getMessage();
         }
+        
+        if ($model->status == \Yii::$app->params['deleted'])
+        	return $this->redirect(Url::previous('actions-redirect'));
+        return $this->render('update', [
+        		'model' => $model,
+        		'uploadMsg' => isset($uploadMsg)?$uploadMsg:null,
+        ]);
     }
 
     /**
@@ -167,30 +218,6 @@ class UserInfoController extends BaseController
     	}
     
     	return $this->render('upload', ['model' => $model]);
-    }
-    
-    /**
-     * To save user profile image
-     * @param UserInfo $model
-     * @return boolean
-     */
-    protected function saveImage($model)
-    {
-    		$pathFolder = Yii::getAlias('@avatar');
-    		if ( !is_dir($pathFolder) && !mkdir($pathFolder, 0775)){
-    			throw new \Exception('Could not create directory.');
-    		}
-    		
-    	    $image = UploadedFile::getInstance($model, 'image');
-        	$ext = end((explode(".", $image->name)));
-        	 
-        	// generate a unique file name
-        	$model->avatar = Yii::$app->security->generateRandomString().".{$ext}";
-        	
-        	// the path to save file
-        	$path = $pathFolder . DIRECTORY_SEPARATOR . $model->avatar;
-        	
-        	return [$image, $path];
     }
 
 }
