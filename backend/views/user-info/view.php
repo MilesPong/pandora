@@ -29,30 +29,30 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'uid',
-        	[
-        		'attribute' => 'Login User',
-        		'value' => $model->user['username']
-        	],
+            [
+                'attribute' => 'Login User',
+                'value' => $model->user['username']
+            ],
             'truename',
             'birthday:date',
             'phone',
             'email:email',
             'qq',
             'address',
-        	[
-        		'attribute' => 'team_id',
-        		'value' => $model->team['team_name']
-    		],
+            [
+                'attribute' => 'team_id',
+                'value' => $model->team['team_name']
+            ],
             'avatar',
-        	'created_at:datetime',
-        	'updated_at:datetime',
+            'created_at:datetime',
+            'updated_at:datetime',
             'memo:ntext',
-        	[
-        		'attribute'=>'status',
-        		'value' => $model->status == Yii::$app->params['active'] ? 
-        			Yii::t('app', 'Active') : (Yii::$app->params['inactive'] ? 
-        					Yii::t('app', 'Inactive') : Yii::t('app', 'Deleted'))        			
-    		],
+            [
+                'attribute'=>'status',
+                'value' => $model->status == Yii::$app->params['active'] ? 
+                    Yii::t('app', 'Active') : (Yii::$app->params['inactive'] ? 
+                            Yii::t('app', 'Inactive') : Yii::t('app', 'Deleted'))                    
+            ],
         ],
     ]) ?>
 

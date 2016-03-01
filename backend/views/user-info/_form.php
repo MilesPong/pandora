@@ -13,7 +13,7 @@ use kartik\file\FileInput;
 <div class="user-info-form">
 
     <?php $form = ActiveForm::begin([
-    		'options' => ['enctype'=>'multipart/form-data']
+            'options' => ['enctype'=>'multipart/form-data']
     ]); ?>
     <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 10px">
@@ -30,13 +30,13 @@ use kartik\file\FileInput;
 
     <?= $form->field($model, 'truename')->textInput(['maxlength' => true]) ?>
 
-	<?= $form->field($model, 'birthday')->widget(DatePicker::classname(), [
-// 	    'language' => 'zh_CN',
-// 	    'dateFormat' => 'yyyy-MM-dd',
-// 		'attribute' => 'birthday',
-		'options' => ['class' => 'form-control'],
-// 			'inline' => true,		
-	]) ?>
+    <?= $form->field($model, 'birthday')->widget(DatePicker::classname(), [
+//         'language' => 'zh_CN',
+//         'dateFormat' => 'yyyy-MM-dd',
+//         'attribute' => 'birthday',
+        'options' => ['class' => 'form-control'],
+//             'inline' => true,        
+    ]) ?>
 
     <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
 
@@ -67,15 +67,15 @@ use kartik\file\FileInput;
     // Customizing the plugin elements (e.g. using a different container to display the caption)
     echo '<div class="well well-small">';
     echo FileInput::widget([
-    		'name' => 'UserInfo[image]',
-    		'options' => ['accept' => 'image/*'],
-    		'pluginOptions' => [
-    				'showPreview' => true,
-    				'showCaption' => false,
-    				'elCaptionText' => '#customCaption',
-    				'allowedFileExtensions'=>['jpg','gif','png'],
-    				'maxFileSize' => 2048
-    		]
+            'name' => 'UserInfo[image]',
+            'options' => ['accept' => 'image/*'],
+            'pluginOptions' => [
+                    'showPreview' => true,
+                    'showCaption' => false,
+                    'elCaptionText' => '#customCaption',
+                    'allowedFileExtensions'=>['jpg','gif','png'],
+                    'maxFileSize' => 2048
+            ]
     ]);
     echo '<span id="customCaption" class="text-success">No file selected</span>';
     echo '</div>';

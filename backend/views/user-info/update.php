@@ -20,12 +20,12 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 <?php endif;?>
 
 <div class="panel panel-default">
-	<div class="panel-heading">
-		<h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
-	</div>
-	<div class="panel-body">
-		<div class="user-info-update">
-    		<?=$this->render ( '_form', [ 'model' => $model ] )?>
-		</div>
-	</div>
+    <div class="panel-heading">
+        <h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
+    </div>
+    <div class="panel-body">
+        <div class="user-info-update">
+            <?=$this->render ( '_form', [ 'model' => $model ] )?>
+        </div>
+    </div>
 </div>

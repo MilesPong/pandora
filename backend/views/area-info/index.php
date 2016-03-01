@@ -24,38 +24,36 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'area_id',
             'area_name',
             'position_lng',
             'position_lat',
             'memo:ntext',
-            // 'status',
-        		[
-        		'header' => Yii::t('app', 'Change status'),
-        		'value' => function ($model) {
-        			if (!$model->status) {
-        				return Html::a(Yii::t('app', 'Unblock'), ['block', 'id' => $model->area_id], [
-        						'class' => 'btn btn-xs btn-success btn-block',
-        						'data-method' => 'post',
-        						'data-confirm' => Yii::t('app', 'Are you sure you want to unblock this user?')
-        				]);
-        			} else {
-        				return Html::a(Yii::t('app', 'Block'), ['block', 'id' => $model->area_id], [
-        						'class' => 'btn btn-xs btn-danger btn-block',
-        						'data-method' => 'post',
-        						'data-confirm' => Yii::t('app', 'Are you sure you want to block this user?')
-        				]);
-        			}
-        		},
-        		'format' => 'raw',
-        		],
-
+//             'status',
             [
-            		'header' => Yii::t('app', 'Handle'),
-            		'headerOptions' => ['width' => 70],
-            		'class' => 'yii\grid\ActionColumn'
-            ],
+                'header' => Yii::t('app', 'Change status'),
+                'value' => function ($model) {
+                    if(! $model->status) {
+                        return Html::a(Yii::t('app', 'Unblock'), ['block', 'id' => $model->area_id], [
+                            'class' => 'btn btn-xs btn-success btn-block',
+                            'data-method' => 'post',
+                            'data-confirm' => Yii::t('app', 'Are you sure you want to unblock this user?')
+                        ]);
+                    } else {
+                        return Html::a(Yii::t('app', 'Block'), ['block','id' => $model->area_id], [
+                            'class' => 'btn btn-xs btn-danger btn-block',
+                            'data-method' => 'post',
+                            'data-confirm' => Yii::t('app', 'Are you sure you want to block this user?')
+                        ]);
+                    }
+                },
+                'format' => 'raw'
+           ],
+           [
+               'header' => Yii::t('app', 'Handle'),
+               'headerOptions' => ['width' => 70],
+               'class' => 'yii\grid\ActionColumn'
+           ],
         ],
     ]); ?>
 

@@ -21,19 +21,22 @@ class TeamInfoController extends BaseController
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
+                    'delete' => [
+                        'POST'
+                    ]
+                ]
+            ]
         ];
     }
 
     /**
      * Lists all TeamInfo models.
+     * 
      * @return mixed
      */
     public function actionIndex()
     {
-    	Url::remember('', 'actions-redirect');
+        Url::remember('', 'actions-redirect');
         $searchModel = new TeamInfoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -54,10 +57,10 @@ class TeamInfoController extends BaseController
         $queryParams = \Yii::$app->request->getQueryParams();
         $queryParams['TeamInfoSearch']['status'] = (string) \Yii::$app->params['deleted'];
         $dataProvider = $searchModel->search($queryParams);
-    
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider
         ]);
     }
 
@@ -69,7 +72,7 @@ class TeamInfoController extends BaseController
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($id)
         ]);
     }
 
@@ -81,12 +84,12 @@ class TeamInfoController extends BaseController
     public function actionCreate()
     {
         $model = new TeamInfo();
-
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->team_id]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                'model' => $model
             ]);
         }
     }
@@ -104,12 +107,12 @@ class TeamInfoController extends BaseController
         if ($model->status == \Yii::$app->params['deleted']) {
             return $this->redirect(Url::previous('actions-redirect'));
         }
-
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->team_id]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                'model' => $model
             ]);
         }
     }
@@ -123,7 +126,7 @@ class TeamInfoController extends BaseController
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        
         return $this->redirect(Url::previous('actions-redirect'));
     }
 

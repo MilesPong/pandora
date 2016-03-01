@@ -34,7 +34,7 @@ class AreaInfoController extends BaseController
      */
     public function actionIndex()
     {
-    	Url::remember('', 'actions-redirect');
+        Url::remember('', 'actions-redirect');
         $searchModel = new AreaInfoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

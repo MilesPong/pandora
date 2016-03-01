@@ -36,27 +36,25 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
-    		Yii::$app->user->isGuest ?
-    		['label' => 'Sign in', 'url' => ['/user/security/login']] :
-    		['label' => 'Sign out (' . Yii::$app->user->identity->username . ')',
-    				'url' => ['/user/security/logout'],
-    				'linkOptions' => ['data-method' => 'post']],
-    				['label' => 'Register', 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest],
-    	['label' => 'Profile', 'url' => ['/user/settings/profile'], 'visible' => !Yii::$app->user->isGuest],
-    	['label' => 'Management', 'url' => ['/user/admin'], 'visible' => !Yii::$app->user->isGuest],
-    	['label' => 'Admin', 'url' => ['/admin'], 'visible' => !Yii::$app->user->isGuest],
-    	['label' => 'UserInfo', 'url' => ['/user-info'], 'visible' => !Yii::$app->user->isGuest,
-    	    'items' => [
-    	        ['label' => Yii::t('app', 'Index'), 'url' => ['/user-info']],
-    	        ['label' => Yii::t('app', 'Trash'), 'url' => ['/user-info/trash']]
-    	    ]
-    	],
-    	['label' => 'TeamInfo', 'url' => ['/team-info'], 'visible' => !Yii::$app->user->isGuest,
-    	    'items' => [
-    	        ['label' => Yii::t('app', 'Index'), 'url' => ['/team-info']],
-    	        ['label' => Yii::t('app', 'Trash'), 'url' => ['/team-info/trash']]
-    	    ]
-    	],
+        Yii::$app->user->isGuest ? 
+            ['label' => 'Sign in', 'url' => ['/user/security/login']] : 
+                ['label' => 'Sign out (' . Yii::$app->user->identity->username . ')', 'url' => ['/user/security/logout'], 'linkOptions' => ['data-method' => 'post']],
+        ['label' => 'Register', 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest],
+        ['label' => 'Profile', 'url' => ['/user/settings/profile'], 'visible' => !Yii::$app->user->isGuest],
+        ['label' => 'Management', 'url' => ['/user/admin'], 'visible' => !Yii::$app->user->isGuest],
+        ['label' => 'Admin', 'url' => ['/admin'], 'visible' => !Yii::$app->user->isGuest],
+        ['label' => 'UserInfo', 'url' => ['/user-info'], 'visible' => !Yii::$app->user->isGuest,
+            'items' => [
+                ['label' => Yii::t('app', 'Index'), 'url' => ['/user-info']],
+                ['label' => Yii::t('app', 'Trash'), 'url' => ['/user-info/trash']]
+            ]
+        ],
+        ['label' => 'TeamInfo', 'url' => ['/team-info'], 'visible' => !Yii::$app->user->isGuest,
+            'items' => [
+                ['label' => Yii::t('app', 'Index'), 'url' => ['/team-info']],
+                ['label' => Yii::t('app', 'Trash'), 'url' => ['/team-info/trash']]
+            ]
+        ],
     ];
 //     if (Yii::$app->user->isGuest) {
 //         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];

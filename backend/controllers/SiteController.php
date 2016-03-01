@@ -80,4 +80,17 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
+    
+    /**
+     * Test Memcached
+     */
+    public function actionTest() {
+        $key = 'my_key';
+        $value = \Yii::$app->cache->get($key);
+        if ($value === false) {
+            $value = date('Y-m-d H:i:s');
+            \Yii::$app->cache->set($key, $value, 5);
+        }
+        echo $value;
+    }
 }

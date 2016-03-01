@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -12,18 +11,18 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'area_name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'area_name')->textInput(['maxlength' => true])?>
 
-    <?= $form->field($model, 'position_lng')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'position_lng')->textInput(['maxlength' => true])?>
 
-    <?= $form->field($model, 'position_lat')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'position_lat')->textInput(['maxlength' => true])?>
 
-    <?= $form->field($model, 'memo')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'memo')->textarea(['rows' => 6])?>
 
-    <?= $form->field($model, 'status')->dropDownList([ -1 => '-1', 0 => '0', 1 => '1', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'status')->dropDownList([ -1 => '-1', 0 => '0', 1 => '1', ], ['prompt' => ''])?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])?>
     </div>
 
     <?php ActiveForm::end(); ?>

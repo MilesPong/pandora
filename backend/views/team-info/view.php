@@ -31,16 +31,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'team_id',
             'team_name',
             [
-            	'attribute'	=> 'captain_id',
-            	'value' => $model->captain['truename']
-    		],
+                'attribute' => 'captain_id',
+                'value' => $model->captain['truename']
+            ],
             'manager',
             'rank',
             'memo:ntext',
             [
-        		'attribute'=>'status',
-        		'value' => $model->status == 1 ? Yii::t('app', 'Active') : Yii::t('app', 'Inactive'),
-    		],
+                'attribute'=>'status',
+                'value' => $model->status == 1 ? Yii::t('app', 'Active') : Yii::t('app', 'Inactive'),
+            ],
         ],
     ]) ?>
 

@@ -39,9 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     'validateOnBlur'         => false,
                     'validateOnType'         => false,
                     'validateOnChange'       => false,
-                		'options' => [
-                				'class' => 'form-signin'
-                		]
+                        'options' => [
+                                'class' => 'form-signin'
+                        ]
                 ]) ?>
 
                 <?= $form->field($model, 'login', ['inputOptions' => ['autofocus' => 'autofocus', 'class' => 'form-control', 'tabindex' => '1']]) ?>
