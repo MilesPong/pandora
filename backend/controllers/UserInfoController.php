@@ -9,7 +9,6 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use common\core\BaseController;
-use yii\base\Object;
 use yii\web\UploadedFile;
 use common\core\UploadException;
 
@@ -56,8 +55,10 @@ class UserInfoController extends BaseController
     {
     	Url::remember('', 'actions-redirect');
     	$searchModel = new UserInfoSearch();
-    	$searchModel->status = Yii::$app->params['deleted'];
-    	$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    	// Yii2 default values for Index data Provider, via: http://www.yiiframework.com/wiki/663/yii2-default-values-for-index-data-provider/    	
+    	$queryParams = array_merge(array(), \Yii::$app->request->getQueryParams());
+    	$queryParams['UserInfoSearch']['status'] = (string) Yii::$app->params['deleted'];
+    	$dataProvider = $searchModel->search($queryParams);
     	$dataProvider->pagination->pageSize=6;
     
     	return $this->render('index', [
@@ -85,7 +86,7 @@ class UserInfoController extends BaseController
 	 * @return mixed
 	 */
 	public function actionCreate() {
-		$model = new UserInfo ();
+		$model = new UserInfo();
 		
 		$connection = Yii::$app->db;
 		$transaction = $connection->beginTransaction ();
@@ -185,7 +186,7 @@ class UserInfoController extends BaseController
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Url::previous('actions-redirect'));
     }
 
     /**
@@ -220,4 +221,16 @@ class UserInfoController extends BaseController
     	return $this->render('upload', ['model' => $model]);
     }
 
+    /**
+     * Test Memcached
+     */
+    public function actionTest() {
+        $key = 'my_key';
+        $value = \Yii::$app->cache->get($key);
+        if ($value === false) {
+            $value = date('Y-m-d H:i:s');
+            \Yii::$app->cache->set($key, $value, 5);
+        }
+        echo $value;
+    }
 }

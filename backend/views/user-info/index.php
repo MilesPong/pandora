@@ -4,17 +4,23 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\jui\DatePicker;
+use yii\helpers\ArrayHelper;
+use common\models\TeamInfo;
+use common\models\UserInfo;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\search\UserInfoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'User Infos');
+// $this->title = Yii::t('app', 'User Infos');
 // $this->params['breadcrumbs'][] = $this->title;
 if (Yii::$app->controller->action->id == 'trash') {
-	$this->params['breadcrumbs'][] = ['label'=>$this->title, 'url' => ['index']];
-	$this->params['breadcrumbs'][] = Yii::t('app', 'Trash');	
+    $this->title = Yii::t('app', 'Trash');
+	$this->params['breadcrumbs'][] = ['label'=>Yii::t('app', 'User Infos'), 'url' => ['index']];
+	$this->params['breadcrumbs'][] = Yii::t('app', 'Trash');
+	$envTrash = true;
 } else {
+    $this->title = Yii::t('app', 'User Infos');
 	$this->params['breadcrumbs'][] = $this->title;
 }
 ?>
@@ -33,13 +39,23 @@ if (Yii::$app->controller->action->id == 'trash') {
         'filterModel' => $searchModel,
         'columns' => [
 //             ['class' => 'yii\grid\SerialColumn'],
-            'uid',
-            'truename',
+            ['class' => yii\grid\CheckboxColumn::className()],
+            [
+                'attribute' => 'uid',
+            ],
+            [
+                'attribute' => 'truename',
+            ],
         	[
         		'attribute' => 'user_id',
-        		'value' => 'user.username'
+        		'value' => 'user.username',
         	],
 //         	'birthday:date',
+            [
+                'attribute' => 'team_id',
+                'value' => 'team.team_name',
+                'filter' => Html::activeDropDownList($searchModel, 'team_id', $searchModel->teamInfoList, ['class' => 'form-control', 'prompt' => Yii::t('app', '-- Please select --')])
+            ],
         	[
         	'attribute' => 'birthday',
         	'value' => function ($model) {
@@ -73,7 +89,8 @@ if (Yii::$app->controller->action->id == 'trash') {
 //             }
 //             ],
             [
-            'header' => Yii::t('app', 'Change status'),
+//             'header' => Yii::t('app', 'Change status'),
+            'attribute' => 'status',
             'value' => function ($model) {
             	if ($model->status == Yii::$app->params['inactive']) {
             		return Html::a(Yii::t('app', 'Unblock'), ['block', 'id' => $model->uid], [
@@ -96,6 +113,7 @@ if (Yii::$app->controller->action->id == 'trash') {
             	}
             },
             'format' => 'raw',
+            'filter' => Html::activeDropDownList($searchModel, 'status', isset($envTrash)?$searchModel->getAllStatus(true):$searchModel->allstatus, ['class' => 'form-control', 'prompt' => Yii::t('app', '-- Please select --')])
             ],
             [
             		'header' => Yii::t('app', Yii::t('app', 'Action')),

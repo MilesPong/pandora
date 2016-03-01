@@ -42,6 +42,24 @@ class TeamInfoController extends BaseController
             'dataProvider' => $dataProvider,
         ]);
     }
+    
+    /**
+     * Lists all deleted TeamInfo models.
+     * @return mixed
+     */
+    public function actionTrash()
+    {
+        Url::remember('', 'actions-redirect');
+        $searchModel = new TeamInfoSearch();
+        $queryParams = \Yii::$app->request->getQueryParams();
+        $queryParams['TeamInfoSearch']['status'] = (string) \Yii::$app->params['deleted'];
+        $dataProvider = $searchModel->search($queryParams);
+    
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 
     /**
      * Displays a single TeamInfo model.
@@ -82,6 +100,10 @@ class TeamInfoController extends BaseController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        
+        if ($model->status == \Yii::$app->params['deleted']) {
+            return $this->redirect(Url::previous('actions-redirect'));
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->team_id]);
@@ -102,7 +124,7 @@ class TeamInfoController extends BaseController
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Url::previous('actions-redirect'));
     }
 
     /**

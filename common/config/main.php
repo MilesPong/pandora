@@ -7,6 +7,15 @@ return [
     'components' => [
         'cache' => [
             'class' => 'yii\caching\FileCache',
+//             'class' => 'yii\caching\MemCache',
+//             'servers' => [
+//                 [
+//                     'host' => '127.0.0.1',
+//                     'port' => 11211,
+//                     'weight' => 60,
+//                 ],
+//             ],
+//             'useMemcached' => true,
         ],
 		'formatter' => [ 
 				'class' => 'yii\i18n\Formatter',
@@ -28,6 +37,10 @@ return [
 // 				'baseUrl' => $_SERVER['HTTP_HOST'],
 // 				'suffix'=>'.html',
 				// 'enableStrictParsing' => false,
+// 				'rules' => [
+// 				    'userinfos' => 'user-info/index',
+// 				    'user-info/view/<id:\d+>' => 'user-info/view'
+// 				]
 		],
     ],
 	'modules' => [

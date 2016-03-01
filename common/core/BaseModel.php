@@ -1,6 +1,8 @@
 <?php
 namespace common\core;
 
+use yii\helpers\ArrayHelper;
+
 class BaseModel extends \yii\db\ActiveRecord
 {
 	/**
@@ -51,6 +53,10 @@ class BaseModel extends \yii\db\ActiveRecord
 		return (bool) $this->updateAttributes(['status' => \Yii::$app->params['deleted']]);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 * @see \yii\db\BaseActiveRecord::beforeDelete()
+	 */
 	public function beforeDelete()
 	{
 		if($this->status == \Yii::$app->params['deleted'])
@@ -58,5 +64,20 @@ class BaseModel extends \yii\db\ActiveRecord
 		
 		$this->softDelete();
 		return false;		
+	}
+	
+	public function getAllStatus($showDeleted = false) {
+	    $status = [
+	        \Yii::$app->params['active'] => \Yii::t('app', 'Active'),
+	        \Yii::$app->params['inactive'] => \Yii::t('app', 'Inactive'),
+	    ];
+	    
+	    if ($showDeleted) {
+	        $delete = [\Yii::$app->params['deleted'] => \Yii::t('app', 'Deleted')];
+// 	        $status = ArrayHelper::merge($status, $delete);
+	        return $delete;
+	    }
+	    
+	    return $status;
 	}
 }

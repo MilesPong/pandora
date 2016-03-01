@@ -142,25 +142,48 @@ class UserInfo extends \common\core\BaseModel
     }
     
     /**
-     * Get relative table data [TeamInfo]
-     * @return multitype:
+     * Get relative table data TeamInfo
+     * 
+     * ```php
+     * $array = $model->teamInfoList
+     * or
+     * $array = $model->getTeamInfoList($onlyActive)
+     * ```
+     * 
+     * @param bool $onlyActive whether to show active status or not
+     * @return array the array of TeamInfo:
      */
-    public function getTeamInfoList() {
-    	$models = TeamInfo::find()->asArray()->all();
+    public function getTeamInfoList($onlyActive = true) {
+        if ($onlyActive) {
+            $where = ['status' => (string) \Yii::$app->params['active']];
+        	$models = TeamInfo::find()->where($where)->asArray()->all();
+        } else {
+            $models = TeamInfo::find()->asArray()->all();
+        }
+
     	return ArrayHelper::map($models, 'team_id', 'team_name');
     }
-    
+
+    /**
+     * {@inheritDoc}
+     * @see \yii\base\Component::behaviors()
+     */
     public function behaviors()
     {
-    	return [
-    			[
-    					'class' => TimestampBehavior::className(),
-    					'attributes' => [
-    							ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-    							ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-    					],
-    			],
-    	];
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => [
+                        'created_at',
+                        'updated_at'
+                    ],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => [
+                        'updated_at'
+                    ]
+                ]
+            ]
+        ];
     }
     
     /**
@@ -244,19 +267,4 @@ class UserInfo extends \common\core\BaseModel
     	return true;
     }
     
-    /* (non-PHPdoc)
-     * @see \common\core\BaseModel::beforeDelete()
-     */
-    public function beforeDelete()
-    {
-    	if($this->status == \Yii::$app->params['deleted']){
-// 	    	if (!$this->deleteImage())
-// 	    		throw new \ErrorException('Image can not be deleted');
-    		return true;
-    	}
-    	
-    	
-    	$this->softDelete();
-    	return false;
-    }
 }

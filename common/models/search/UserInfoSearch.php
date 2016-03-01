@@ -6,7 +6,6 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\UserInfo;
-use common\models\TeamInfo;
 use dektrium\user\models\User;
 
 /**
@@ -21,6 +20,7 @@ class UserInfoSearch extends UserInfo
     {
         return [
             [['uid', 'team_id', 'created_at', 'updated_at'], 'integer'],
+            [['truename', 'phone', 'email', 'user_id', 'qq'], 'filter', 'filter' => 'trim'],
             [['user_id', 'truename', 'phone', 'email', 'qq', 'address', 'avatar', 'memo', 'status', 'birthday'], 'safe'],
         ];
     }
@@ -58,18 +58,19 @@ class UserInfoSearch extends UserInfo
             $query->where('0=1');
             return $dataProvider;
         }
-        
-        //convert unix timestamp
+
+        // convert unix timestamp
         if (!empty($this->birthday)) {
         	$this->birthday = strtotime($this->birthday);
         }
         
-		$query->from ( UserInfo::tableName () . ' t' )
-		->joinWith ( [ 
-				'user' => function ($q) {
-					$q->from ( User::tableName () . ' u' );
-				} 
-		] );
+        // join related table
+        $query->from(UserInfo::tableName() . ' t')->joinWith([
+                'user' => function ($q)
+                {
+                    $q->from(User::tableName() . ' u');
+                } 
+        ]);
 
         // grid filtering conditions
         $query->andFilterWhere([
@@ -79,11 +80,12 @@ class UserInfoSearch extends UserInfo
             'team_id' => $this->team_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'status' => $this->status,
         ]);
         
-        //default show undelete data
+        // default show undelete data
         if ($this->status == null) {
-        	$query->andFilterWhere(['not like', 'status', \Yii::$app->params['deleted']]);
+            $query->andFilterWhere(['<>', 'status', (string) \Yii::$app->params['deleted']]);
         }
         
         $query->andFilterWhere(['like', 'truename', $this->truename])
@@ -93,7 +95,7 @@ class UserInfoSearch extends UserInfo
             ->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'avatar', $this->avatar])
             ->andFilterWhere(['like', 'memo', $this->memo])
-            ->andFilterWhere(['like', 'status', $this->status])
+//             ->andFilterWhere(['like', 'status', $this->status])
        		->andFilterWhere(['like', 'u.username', $this->user_id]);
 
         return $dataProvider;
