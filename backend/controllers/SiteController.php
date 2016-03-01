@@ -53,11 +53,17 @@ class SiteController extends Controller
         ];
     }
 
+    /**
+     * @return string
+     */
     public function actionIndex()
     {
         return $this->render('index');
     }
 
+    /**
+     * @return \yii\web\Response|string
+     */
     public function actionLogin()
     {
         if (!\Yii::$app->user->isGuest) {
@@ -74,6 +80,9 @@ class SiteController extends Controller
         }
     }
 
+    /**
+     * @return \yii\web\Response
+     */
     public function actionLogout()
     {
         Yii::$app->user->logout();

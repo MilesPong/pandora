@@ -11,6 +11,10 @@ class UploadForm extends Model
      */
     public $imageFile;
 
+    /**
+     * {@inheritDoc}
+     * @see \yii\base\Model::rules()
+     */
     public function rules()
     {
         return [
@@ -18,6 +22,9 @@ class UploadForm extends Model
         ];
     }
 
+    /**
+     * @return boolean
+     */
     public function upload()
     {
         //Set the path that the file will be uploaded to

@@ -17,6 +17,10 @@ use common\core\UploadException;
  */
 class UserInfoController extends BaseController
 {
+    /**
+     * {@inheritDoc}
+     * @see \yii\base\Component::behaviors()
+     */
     public function behaviors()
     {
         return [
@@ -209,6 +213,9 @@ class UserInfoController extends BaseController
         }
     }
     
+    /**
+     * @return \yii\web\Response|string
+     */
     public function actionUpload()
     {
         $model = new \common\models\UploadForm();

@@ -15,6 +15,10 @@ use yii\helpers\Url;
  */
 class TeamInfoController extends BaseController
 {
+    /**
+     * {@inheritDoc}
+     * @see \yii\base\Component::behaviors()
+     */
     public function behaviors()
     {
         return [
