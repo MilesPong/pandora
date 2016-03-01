@@ -3,19 +3,19 @@ namespace common\core;
 
 class UploadException extends \Exception
 {
-	public function __construct($code) {
-		$message = $this->codeToMessage($code);
-		parent::__construct($message, $code);
-	}
-	
-	private function codeToMessage($code)
-	{
-		//TODO I18N translation
-		switch ($code) {
-			case UPLOAD_ERR_INI_SIZE:
-				$message = "The uploaded file exceeds the upload_max_filesize directive in php.ini"; 
-				break;
-			case UPLOAD_ERR_FORM_SIZE: 
+    public function __construct($code) {
+        $message = $this->codeToMessage($code);
+        parent::__construct($message, $code);
+    }
+    
+    private function codeToMessage($code)
+    {
+        //TODO I18N translation
+        switch ($code) {
+            case UPLOAD_ERR_INI_SIZE:
+                $message = "The uploaded file exceeds the upload_max_filesize directive in php.ini"; 
+                break;
+            case UPLOAD_ERR_FORM_SIZE: 
                 $message = "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form";
                 break; 
             case UPLOAD_ERR_PARTIAL: 
@@ -36,8 +36,8 @@ class UploadException extends \Exception
             default: 
                 $message = "Unknown upload error"; 
                 break; 
-		}
-		return $message;		
-	}
-	
+        }
+        return $message;        
+    }
+    
 }

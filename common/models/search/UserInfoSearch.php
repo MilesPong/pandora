@@ -61,7 +61,7 @@ class UserInfoSearch extends UserInfo
 
         // convert unix timestamp
         if (!empty($this->birthday)) {
-        	$this->birthday = strtotime($this->birthday);
+            $this->birthday = strtotime($this->birthday);
         }
         
         // join related table
@@ -96,7 +96,7 @@ class UserInfoSearch extends UserInfo
             ->andFilterWhere(['like', 'avatar', $this->avatar])
             ->andFilterWhere(['like', 'memo', $this->memo])
 //             ->andFilterWhere(['like', 'status', $this->status])
-       		->andFilterWhere(['like', 'u.username', $this->user_id]);
+            ->andFilterWhere(['like', 'u.username', $this->user_id]);
 
         return $dataProvider;
     }

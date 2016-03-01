@@ -43,8 +43,8 @@ class TeamInfo extends \common\core\BaseModel
             [['memo', 'status'], 'string'],
             [['team_name', 'manager'], 'string', 'max' => 25],
             [['captain_id'], 'exist', 'skipOnError' => true, 'targetClass' => UserInfo::className(), 'targetAttribute' => ['captain_id' => 'uid']],
-        	[['rank', 'status'], 'default', 'value' => 1],
-        	[['team_name', 'manager'], 'filter' , 'filter' => 'trim'],
+            [['rank', 'status'], 'default', 'value' => 1],
+            [['team_name', 'manager'], 'filter' , 'filter' => 'trim'],
         ];
     }
 
@@ -109,7 +109,7 @@ class TeamInfo extends \common\core\BaseModel
      * @return multitype:
      */
     public function getUserInfoList() {
-    	$models = UserInfo::find()->asArray()->all();
-    	return ArrayHelper::map($models, 'uid', 'truename');
+        $models = UserInfo::find()->asArray()->all();
+        return ArrayHelper::map($models, 'uid', 'truename');
     }
 }

@@ -20,9 +20,9 @@ class UploadForm extends Model
 
     public function upload()
     {
-    	//Set the path that the file will be uploaded to
-    	$path = \Yii::getAlias('@uploads');
-    	$fileName = md5(date('Y-m-d H:i:s:u'));
+        //Set the path that the file will be uploaded to
+        $path = \Yii::getAlias('@uploads');
+        $fileName = md5(date('Y-m-d H:i:s:u'));
 
         if ($this->validate()) {
             $this->imageFile->saveAs($path . DIRECTORY_SEPARATOR . $fileName . '.' . $this->imageFile->extension);

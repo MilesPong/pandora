@@ -34,12 +34,12 @@ use yii\web\UploadedFile;
  */
 class UserInfo extends \common\core\BaseModel
 {
-	/**
-	 * @var mixed image the attribute for rendering the file input
-	 * widget for upload on the form
-	 */
-	public $image;
-	
+    /**
+     * @var mixed image the attribute for rendering the file input
+     * widget for upload on the form
+     */
+    public $image;
+    
     /**
      * @inheritdoc
      */
@@ -63,17 +63,17 @@ class UserInfo extends \common\core\BaseModel
             [['qq'], 'string', 'max' => 15],
             [['team_id'], 'exist', 'skipOnError' => true, 'targetClass' => TeamInfo::className(), 'targetAttribute' => ['team_id' => 'team_id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
-        	['status', 'default', 'value' => 1],
-        	[['phone'], 'match' , 'pattern' =>'/^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/',
-        		'message' => Yii::t('app', 'Your phone number is invalid.')],
-        	[['phone'], 'unique' , 'message' => Yii::t('app', 'Your phone number has been used.')],
-        	[['phone', 'truename', 'email', 'qq', 'address', 'avatar'], 'filter' , 'filter' => 'trim'],
-        	['birthday', 'date', 'timestampAttribute' => 'birthday'],
-        	'emailPattern' => ['email', 'email'],
-        	'emailLength' => ['email', 'string', 'max' => 255],
-        	'emailUnique' => ['email', 'unique'],        		
-        	[['image'], 'safe'],
-        	[['image'], 'file', 'extensions'=>'jpg, gif, png', 'maxSize'=>'1024 * 1024 * 2'], //Limit maxSize 2MB
+            ['status', 'default', 'value' => 1],
+            [['phone'], 'match' , 'pattern' =>'/^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/',
+                'message' => Yii::t('app', 'Your phone number is invalid.')],
+            [['phone'], 'unique' , 'message' => Yii::t('app', 'Your phone number has been used.')],
+            [['phone', 'truename', 'email', 'qq', 'address', 'avatar'], 'filter' , 'filter' => 'trim'],
+            ['birthday', 'date', 'timestampAttribute' => 'birthday'],
+            'emailPattern' => ['email', 'email'],
+            'emailLength' => ['email', 'string', 'max' => 255],
+            'emailUnique' => ['email', 'unique'],                
+            [['image'], 'safe'],
+            [['image'], 'file', 'extensions'=>'jpg, gif, png', 'maxSize'=>'1024 * 1024 * 2'], //Limit maxSize 2MB
         ];
     }
 
@@ -137,8 +137,8 @@ class UserInfo extends \common\core\BaseModel
      * @return multitype:
      */
     public function getUserList() {
-    	$models = User::find()->asArray()->all();
-    	return ArrayHelper::map($models, 'id', 'username');
+        $models = User::find()->asArray()->all();
+        return ArrayHelper::map($models, 'id', 'username');
     }
     
     /**
@@ -156,12 +156,12 @@ class UserInfo extends \common\core\BaseModel
     public function getTeamInfoList($onlyActive = true) {
         if ($onlyActive) {
             $where = ['status' => (string) \Yii::$app->params['active']];
-        	$models = TeamInfo::find()->where($where)->asArray()->all();
+            $models = TeamInfo::find()->where($where)->asArray()->all();
         } else {
             $models = TeamInfo::find()->asArray()->all();
         }
 
-    	return ArrayHelper::map($models, 'team_id', 'team_name');
+        return ArrayHelper::map($models, 'team_id', 'team_name');
     }
 
     /**
@@ -191,13 +191,13 @@ class UserInfo extends \common\core\BaseModel
      */
     public function beforeSave($insert)
     {
-    	if (parent::beforeSave($insert)) {
-    		// Place your custom code here
-    		
-    		return true;
-    	} else {
-    		return false;
-    	}
+        if (parent::beforeSave($insert)) {
+            // Place your custom code here
+            
+            return true;
+        } else {
+            return false;
+        }
     }
     
     /**
@@ -205,9 +205,9 @@ class UserInfo extends \common\core\BaseModel
      */
     public function getImageUrl()
     {
-    	if ($this->avatar)
-    		return \Yii::$app->urlManagerFrontend->createUrl('uploads/avatar').DIRECTORY_SEPARATOR.$this->avatar;
-    	return null;
+        if ($this->avatar)
+            return \Yii::$app->urlManagerFrontend->createUrl('uploads/avatar').DIRECTORY_SEPARATOR.$this->avatar;
+        return null;
     }
     
     /**
@@ -216,7 +216,7 @@ class UserInfo extends \common\core\BaseModel
      */
     public function getImageFile()
     {
-    	return isset($this->avatar) && $this->avatar ? Yii::getAlias('@avatar') . DIRECTORY_SEPARATOR . $this->avatar : null;
+        return isset($this->avatar) && $this->avatar ? Yii::getAlias('@avatar') . DIRECTORY_SEPARATOR . $this->avatar : null;
     }
     
     /**
@@ -225,22 +225,22 @@ class UserInfo extends \common\core\BaseModel
      * @return mixed the uploaded image instance
      */
     public function uploadImage() {
-    	// get the uploaded file instance. for multiple file uploads
-    	// the following data will return an array (you may need to use
-    	// getInstances method)
-    	$image = UploadedFile::getInstance($this, 'image');
+        // get the uploaded file instance. for multiple file uploads
+        // the following data will return an array (you may need to use
+        // getInstances method)
+        $image = UploadedFile::getInstance($this, 'image');
     
-    	// if no image was uploaded abort the upload
-    	if (empty($image)) {
-    		return false;
-    	}
+        // if no image was uploaded abort the upload
+        if (empty($image)) {
+            return false;
+        }
     
-    	// generate a unique file name
-    	$ext = end((explode(".", $image->name)));    	
-    	$this->avatar = Yii::$app->security->generateRandomString().".{$ext}";
-    	
-    	// the uploaded image instance
-    	return $image;
+        // generate a unique file name
+        $ext = end((explode(".", $image->name)));        
+        $this->avatar = Yii::$app->security->generateRandomString().".{$ext}";
+        
+        // the uploaded image instance
+        return $image;
     }
     
     /**
@@ -249,22 +249,22 @@ class UserInfo extends \common\core\BaseModel
      * @return boolean the status of deletion
      */
     public function deleteImage() {
-    	$file = $this->getImageFile();
+        $file = $this->getImageFile();
     
-    	// check if file exists on server
-    	if (empty($file) || !file_exists($file)) {
-    		return true;
-    	}
+        // check if file exists on server
+        if (empty($file) || !file_exists($file)) {
+            return true;
+        }
     
-    	// check if uploaded file can be deleted on server
-    	if (!unlink($file)) {
-    		return false;
-    	}
+        // check if uploaded file can be deleted on server
+        if (!unlink($file)) {
+            return false;
+        }
     
-    	// if deletion successful, reset your file attributes
-    	$this->avatar = null;
+        // if deletion successful, reset your file attributes
+        $this->avatar = null;
     
-    	return true;
+        return true;
     }
     
 }
