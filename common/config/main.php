@@ -42,6 +42,9 @@ return [
 //                     'user-info/view/<id:\d+>' => 'user-info/view'
 //                 ]
         ],
+        'mapList' => [
+            'class' => 'common\components\MapList'
+        ]
     ],
     'modules' => [
             'user' => [

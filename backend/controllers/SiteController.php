@@ -22,7 +22,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error', 'test', 'my-components'],
                         'allow' => true,
                     ],
                     [
@@ -101,5 +101,10 @@ class SiteController extends Controller
             \Yii::$app->cache->set($key, $value, 5);
         }
         echo $value;
+    }
+    
+    public function actionMyComponents() {
+        $a = \Yii::$app->mapList->userlist;
+        print_r($a);
     }
 }

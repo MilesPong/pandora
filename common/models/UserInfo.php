@@ -6,7 +6,6 @@ use Yii;
 use dektrium\user\models\User;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
 /**
@@ -132,38 +131,6 @@ class UserInfo extends \common\core\BaseModel
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
     
-    /**
-     * Get relative table data [User]
-     * @return multitype:
-     */
-    public function getUserList() {
-        $models = User::find()->asArray()->all();
-        return ArrayHelper::map($models, 'id', 'username');
-    }
-    
-    /**
-     * Get relative table data TeamInfo
-     * 
-     * ```php
-     * $array = $model->teamInfoList
-     * or
-     * $array = $model->getTeamInfoList($onlyActive)
-     * ```
-     * 
-     * @param bool $onlyActive whether to show active status or not
-     * @return array the array of TeamInfo:
-     */
-    public function getTeamInfoList($onlyActive = true) {
-        if ($onlyActive) {
-            $where = ['status' => (string) \Yii::$app->params['active']];
-            $models = TeamInfo::find()->where($where)->asArray()->all();
-        } else {
-            $models = TeamInfo::find()->asArray()->all();
-        }
-
-        return ArrayHelper::map($models, 'team_id', 'team_name');
-    }
-
     /**
      * {@inheritDoc}
      * @see \yii\base\Component::behaviors()

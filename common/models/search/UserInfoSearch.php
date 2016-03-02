@@ -6,7 +6,6 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\UserInfo;
-use dektrium\user\models\User;
 
 /**
  * UserInfoSearch represents the model behind the search form about `common\models\UserInfo`.
@@ -44,7 +43,7 @@ class UserInfoSearch extends UserInfo
     public function search($params)
     {
         $query = UserInfo::find();
-
+        
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -64,28 +63,35 @@ class UserInfoSearch extends UserInfo
             $this->birthday = strtotime($this->birthday);
         }
         
-        // join related table
-        $query->from(UserInfo::tableName() . ' t')->joinWith([
-                'user' => function ($q)
-                {
-                    $q->from(User::tableName() . ' u');
-                } 
-        ]);
-
+        // join related table-1
+        $query->from($this::tableName() . ' t')->joinWith(['user u']);
+        
+        // join related table-2
+        // only undefined team data
+        if ($this->team_id === '0') {
+            $query->andWhere(['t.team_id' => null]);
+        } else {
+            // specify team data
+            $query->joinWith('team m')->where(['m.status' => (string) \Yii::$app->params['active']]);
+            $query->andFilterWhere(['t.team_id' => $this->team_id]);
+            // include undefined team data
+            if ($this->team_id == null) {
+                $query->orWhere(['t.team_id' => null]);
+            }
+        }
+        
         // grid filtering conditions
         $query->andFilterWhere([
             'uid' => $this->uid,
-//             'user_id' => $this->user_id,
             'birthday' => $this->birthday,
-            'team_id' => $this->team_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'status' => $this->status,
+            't.status' => $this->status,
         ]);
         
         // default show undelete data
         if ($this->status == null) {
-            $query->andFilterWhere(['<>', 'status', (string) \Yii::$app->params['deleted']]);
+            $query->andFilterWhere(['<>', 't.status', (string) \Yii::$app->params['deleted']]);
         }
         
         $query->andFilterWhere(['like', 'truename', $this->truename])
@@ -95,9 +101,8 @@ class UserInfoSearch extends UserInfo
             ->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'avatar', $this->avatar])
             ->andFilterWhere(['like', 'memo', $this->memo])
-//             ->andFilterWhere(['like', 'status', $this->status])
             ->andFilterWhere(['like', 'u.username', $this->user_id]);
-
+        
         return $dataProvider;
     }
 }

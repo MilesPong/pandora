@@ -3,7 +3,6 @@
 namespace common\models;
 
 use Yii;
-use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%team_info}}".
@@ -104,12 +103,4 @@ class TeamInfo extends \common\core\BaseModel
         return $this->hasMany(UserTeamInfo::className(), ['team_id' => 'team_id']);
     }
     
-    /**
-     * Get relative table data [User]
-     * @return multitype:
-     */
-    public function getUserInfoList() {
-        $models = UserInfo::find()->asArray()->all();
-        return ArrayHelper::map($models, 'uid', 'truename');
-    }
 }

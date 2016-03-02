@@ -54,7 +54,7 @@ if (Yii::$app->controller->action->id == 'trash') {
             [
                 'attribute' => 'team_id',
                 'value' => 'team.team_name',
-                'filter' => Html::activeDropDownList($searchModel, 'team_id', $searchModel->teamInfoList, ['class' => 'form-control', 'prompt' => Yii::t('app', '-- Please select --')])
+                'filter' => Html::activeDropDownList($searchModel, 'team_id', Yii::$app->mapList->teamInfoList, ['class' => 'form-control', 'prompt' => Yii::t('app', '-- Please select --')])
             ],
             [
             'attribute' => 'birthday',

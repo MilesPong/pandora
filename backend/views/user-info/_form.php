@@ -26,7 +26,7 @@ use kartik\file\FileInput;
   <div class="tab-pane active vertical-pad" id="general">
 
 <div class="col-lg-6">
-    <?= $form->field($model, 'user_id')->dropDownList($model->UserList,  ['prompt' => Yii::t('app', 'Please choose login user')]) ?>
+    <?= $form->field($model, 'user_id')->dropDownList(Yii::$app->mapList->UserList,  ['prompt' => Yii::t('app', 'Please choose login user')]) ?>
 
     <?= $form->field($model, 'truename')->textInput(['maxlength' => true]) ?>
 
@@ -47,7 +47,7 @@ use kartik\file\FileInput;
 <div class="col-lg-6">
     <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'team_id')->dropDownList($model->TeamInfoList,  ['prompt' => Yii::t('app', 'Please choose team')]) ?>
+    <?= $form->field($model, 'team_id')->dropDownList(Yii::$app->mapList->getTeamInfoList(true, false),  ['prompt' => Yii::t('app', 'Please choose team')]) ?>
 
     <?//= $form->field($model, 'avatar')->textInput(['maxlength' => true]) ?>
 
