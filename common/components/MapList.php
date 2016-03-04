@@ -6,6 +6,7 @@ use dektrium\user\models\User;
 use yii\helpers\ArrayHelper;
 use common\models\TeamInfo;
 use common\models\UserInfo;
+use common\core\BaseModel;
 
 class MapList extends Component
 {
@@ -30,7 +31,7 @@ class MapList extends Component
      */
     public function getTeamInfoList($onlyActive = true, $unDefinedTeam = true) {
         if ($onlyActive) {
-            $where = ['status' => (string) \Yii::$app->params['active']];
+            $where = ['status' => BaseModel::STATUS_ACTIVE];
             $models = TeamInfo::find()->where($where)->asArray()->all();
         } else {
             $models = TeamInfo::find()->asArray()->all();
@@ -53,7 +54,7 @@ class MapList extends Component
      */
     public function getUserInfoList($onlyAcitve = true) {
         if ($onlyAcitve) {
-            $where = ['status' => (string) \Yii::$app->params['active']];
+            $where = ['status' => BaseModel::STATUS_ACTIVE];
             $models = UserInfo::find()->where($where)->asArray()->all();
         } else {
             $models = UserInfo::find()->asArray()->all();

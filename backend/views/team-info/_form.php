@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'memo')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'status')->dropDownList([ $model::STATUS_INACTIVE => Yii::t('app', 'Inactive'), $model::STATUS_ACTIVE => Yii::t('app', 'Active'), ], ['prompt' => Yii::t('app', 'Default to Active')]) ?>
+    <?= $form->field($model, 'status')->dropDownList($model->getStatusSelection(), ['prompt' => Yii::t('app', 'Default to Active')]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -41,11 +41,12 @@ class TeamInfo extends \common\core\BaseModel
             [['captain_id', 'rank'], 'integer'],
             [['memo', 'status'], 'string'],
             [['team_name', 'manager'], 'string', 'max' => 25],
-            [['captain_id'], 'exist', 'skipOnError' => true, 'targetClass' => UserInfo::className(), 'targetAttribute' => ['captain_id' => 'uid']],
-            [['rank', 'status'], 'default', 'value' => 1],
+//             [['captain_id'], 'exist', 'skipOnError' => true, 'targetClass' => UserInfo::className(), 'targetAttribute' => ['captain_id' => 'uid']],
+            ['captain_id', 'in', 'range' => UserInfo::find()->select('uid')->where(['status' => UserInfo::STATUS_ACTIVE])->asArray()->column()],
+            [['rank', 'status'], 'default', 'value' => self::STATUS_ACTIVE],
             [['team_name', 'manager'], 'filter' , 'filter' => 'trim'],
             [['team_name', 'captain_id'], 'unique'],
-            [['status'], 'in', 'range' => [self::STATUS_DELETED, self::STATUS_INACTIVE, self::STATUS_ACTIVE]],
+            [['status'], 'in', 'range' => $this->StatusArray],
         ];
     }
 

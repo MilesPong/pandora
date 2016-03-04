@@ -22,6 +22,44 @@ class BaseModel extends \yii\db\ActiveRecord
      */
     const STATUS_DELETED = 3;
     
+
+    /**
+     * Return the array of status
+     * @param string $includeDeleted
+     * @return array
+     */
+    public function getStatusArray($includeDeleted = false) {
+        $statusArray = [
+            self::STATUS_ACTIVE,
+            self::STATUS_INACTIVE,
+        ];
+        
+        if ($includeDeleted) {
+            $statusArray = array_merge($statusArray, [self::STATUS_DELETED]);
+        }
+        
+        return $statusArray;
+    }
+    
+    /**
+     * Return the array of status.
+     * Different from [[getStatusArray]], it's uesd for dropdown list selection in form
+     * @param string $includeDeleted
+     * @return array
+     */
+    public function getStatusSelection($includeDeleted = false) {
+        $array = [
+            self::STATUS_ACTIVE => \Yii::t('app', 'Active'),
+            self::STATUS_INACTIVE => \Yii::t('app', 'Inactive'),
+        ];
+        
+        if ($includeDeleted) {
+            $array = $array + [self::STATUS_DELETED => \Yii::t('app', 'Deleted')];
+        }
+        
+        return $array;
+    }
+    
     /**
      * @return bool Whether the status is deleted or not.
      */
