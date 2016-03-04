@@ -59,7 +59,7 @@ class TeamInfoController extends BaseController
         Url::remember('', 'actions-redirect');
         $searchModel = new TeamInfoSearch();
         $queryParams = \Yii::$app->request->getQueryParams();
-        $queryParams['TeamInfoSearch']['status'] = (string) \Yii::$app->params['deleted'];
+        $queryParams['TeamInfoSearch']['status'] = $searchModel::STATUS_DELETED;
         $dataProvider = $searchModel->search($queryParams);
         
         return $this->render('index', [
@@ -108,7 +108,7 @@ class TeamInfoController extends BaseController
     {
         $model = $this->findModel($id);
         
-        if ($model->status == \Yii::$app->params['deleted']) {
+        if ($model->status == $model::STATUS_DELETED) {
             return $this->redirect(Url::previous('actions-redirect'));
         }
         

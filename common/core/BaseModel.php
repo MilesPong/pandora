@@ -5,12 +5,29 @@ use yii\helpers\ArrayHelper;
 
 class BaseModel extends \yii\db\ActiveRecord
 {
+
+    /**
+     *
+     * @var integer status active
+     */
+    const STATUS_ACTIVE = 1;
+
+    /**
+     * @var integer status inactive
+     */
+    const STATUS_INACTIVE = 2;
+
+    /**
+     * @var integer status deleted
+     */
+    const STATUS_DELETED = 3;
+    
     /**
      * @return bool Whether the status is deleted or not.
      */
     public function getIsDeleted()
     {
-        return $this->status == \Yii::$app->params['deleted'];
+        return $this->status == self::STATUS_DELETED;
     }
     
     /**
@@ -18,7 +35,7 @@ class BaseModel extends \yii\db\ActiveRecord
      */
     public function getIsBlocked()
     {
-        return $this->status == \Yii::$app->params['inactive'];
+        return $this->status == self::STATUS_INACTIVE;
     }
     
     /**
@@ -26,7 +43,7 @@ class BaseModel extends \yii\db\ActiveRecord
      */
     public function revert()
     {
-        return (bool) $this->updateAttributes(['status' => \Yii::$app->params['active']]);
+        return (bool) $this->updateAttributes(['status' => self::STATUS_ACTIVE]);
     }
     
     /**
@@ -34,7 +51,7 @@ class BaseModel extends \yii\db\ActiveRecord
      */
     public function block()
     {
-        return (bool) $this->updateAttributes(['status' => \Yii::$app->params['inactive']]);
+        return (bool) $this->updateAttributes(['status' => self::STATUS_INACTIVE]);
     }
     
     /**
@@ -42,7 +59,7 @@ class BaseModel extends \yii\db\ActiveRecord
      */
     public function unblock()
     {
-        return (bool) $this->updateAttributes(['status' => \Yii::$app->params['active']]);
+        return (bool) $this->updateAttributes(['status' => self::STATUS_ACTIVE]);
     }
     
     /**
@@ -50,7 +67,7 @@ class BaseModel extends \yii\db\ActiveRecord
      */
     public function softDelete()
     {
-        return (bool) $this->updateAttributes(['status' => \Yii::$app->params['deleted']]);
+        return (bool) $this->updateAttributes(['status' => self::STATUS_DELETED]);
     }
     
     /**
@@ -59,7 +76,7 @@ class BaseModel extends \yii\db\ActiveRecord
      */
     public function beforeDelete()
     {
-        if($this->status == \Yii::$app->params['deleted'])
+        if($this->status == self::STATUS_DELETED)
             return true;
         
         $this->softDelete();
@@ -72,12 +89,12 @@ class BaseModel extends \yii\db\ActiveRecord
      */
     public function getAllStatus($showDeleted = false) {
         $status = [
-            \Yii::$app->params['active'] => \Yii::t('app', 'Active'),
-            \Yii::$app->params['inactive'] => \Yii::t('app', 'Inactive'),
+            self::STATUS_ACTIVE => \Yii::t('app', 'Active'),
+            self::STATUS_INACTIVE => \Yii::t('app', 'Inactive'),
         ];
         
         if ($showDeleted) {
-            $delete = [\Yii::$app->params['deleted'] => \Yii::t('app', 'Deleted')];
+            $delete = [self::STATUS_DELETED => \Yii::t('app', 'Deleted')];
 //             $status = ArrayHelper::merge($status, $delete);
             return $delete;
         }

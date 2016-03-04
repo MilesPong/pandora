@@ -72,7 +72,7 @@ class UserInfoSearch extends UserInfo
             $query->andWhere(['t.team_id' => null]);
         } else {
             // specify team data
-            $query->joinWith('team m')->where(['m.status' => (string) \Yii::$app->params['active']]);
+            $query->joinWith('team m')->where(['m.status' => self::STATUS_ACTIVE]);
             $query->andFilterWhere(['t.team_id' => $this->team_id]);
             // include undefined team data
             if ($this->team_id == null) {
@@ -91,7 +91,7 @@ class UserInfoSearch extends UserInfo
         
         // default show undelete data
         if ($this->status == null) {
-            $query->andFilterWhere(['<>', 't.status', (string) \Yii::$app->params['deleted']]);
+            $query->andFilterWhere(['<>', 't.status', self::STATUS_DELETED]);
         }
         
         $query->andFilterWhere(['like', 'truename', $this->truename])

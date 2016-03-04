@@ -64,7 +64,7 @@ class UserInfoController extends BaseController
         $searchModel = new UserInfoSearch();
         // Yii2 default values for Index data Provider, via: http://www.yiiframework.com/wiki/663/yii2-default-values-for-index-data-provider/
         $queryParams = array_merge(array(), \Yii::$app->request->getQueryParams());
-        $queryParams['UserInfoSearch']['status'] = (string) Yii::$app->params['deleted'];
+        $queryParams['UserInfoSearch']['status'] = $searchModel::STATUS_DELETED;
         $dataProvider = $searchModel->search($queryParams);
         $dataProvider->pagination->pageSize = 6;
         
@@ -176,7 +176,7 @@ class UserInfoController extends BaseController
             $uploadMsg = $e->getMessage();
         }
         
-        if ($model->status == \Yii::$app->params['deleted'])
+        if ($model->status == $model::STATUS_DELETED)
             return $this->redirect(Url::previous('actions-redirect'));
         return $this->render('update', [
             'model' => $model,

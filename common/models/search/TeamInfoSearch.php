@@ -76,7 +76,7 @@ class TeamInfoSearch extends TeamInfo
         
         // default to show undeleted data
         if ($this->status == null) {
-            $query->andFilterWhere(['<>', 't.status', (string) \Yii::$app->params['deleted']]);
+            $query->andFilterWhere(['<>', 't.status', self::STATUS_DELETED]);
         }
 
         $query->andFilterWhere(['like', 'team_name', $this->team_name])

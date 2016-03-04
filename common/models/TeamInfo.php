@@ -44,6 +44,8 @@ class TeamInfo extends \common\core\BaseModel
             [['captain_id'], 'exist', 'skipOnError' => true, 'targetClass' => UserInfo::className(), 'targetAttribute' => ['captain_id' => 'uid']],
             [['rank', 'status'], 'default', 'value' => 1],
             [['team_name', 'manager'], 'filter' , 'filter' => 'trim'],
+            [['team_name', 'captain_id'], 'unique'],
+            [['status'], 'in', 'range' => [self::STATUS_DELETED, self::STATUS_INACTIVE, self::STATUS_ACTIVE]],
         ];
     }
 

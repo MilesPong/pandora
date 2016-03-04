@@ -46,21 +46,22 @@ if (Yii::$app->controller->action->id == 'trash') {
             // 'memo:ntext',
             // 'status',
                 [
-                'header' => Yii::t('app', 'Change status'),
+//                 'header' => Yii::t('app', 'Change status'),
+                'attribute' => 'status',
                 'value' => function ($model) {
-                    if ($model->status == Yii::$app->params['inactive']) {
+                    if ($model->status == $model::STATUS_INACTIVE) {
                         return Html::a(Yii::t('app', 'Unblock'), ['block', 'id' => $model->team_id], [
                                 'class' => 'btn btn-xs btn-success btn-block',
                                 'data-method' => 'post',
                                 'data-confirm' => Yii::t('app', 'Are you sure you want to unblock this user?')
                         ]);
-                    } else if ($model->status == Yii::$app->params['active']) {
+                    } else if ($model->status == $model::STATUS_ACTIVE) {
                         return Html::a(Yii::t('app', 'Block'), ['block', 'id' => $model->team_id], [
                                 'class' => 'btn btn-xs btn-danger btn-block',
                                 'data-method' => 'post',
                                 'data-confirm' => Yii::t('app', 'Are you sure you want to block this user?')
                         ]);
-                    } else if ($model->status == Yii::$app->params['deleted']) {
+                    } else if ($model->status == $model::STATUS_DELETED) {
                         return Html::a(Yii::t('app', 'Revert'), ['revert', 'id' => $model->team_id], [
                             'class' => 'btn btn-xs btn-warning btn-block',
                             'data-method' => 'post',

@@ -39,7 +39,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'memo:ntext',
             [
                 'attribute'=>'status',
-                'value' => $model->status == 1 ? Yii::t('app', 'Active') : Yii::t('app', 'Inactive'),
+                'value' => $model->status == $model::STATUS_ACTIVE ? Yii::t('app', 'Active') : 
+                ($model->status == $model::STATUS_INACTIVE ? Yii::t('app', 'Inactive') : Yii::t('app', 'Deleted'))
             ],
         ],
     ]) ?>

@@ -63,6 +63,7 @@ class UserInfo extends \common\core\BaseModel
             [['team_id'], 'exist', 'skipOnError' => true, 'targetClass' => TeamInfo::className(), 'targetAttribute' => ['team_id' => 'team_id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             ['status', 'default', 'value' => 1],
+            [['status'], 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED, self::STATUS_INACTIVE]],
             [['phone'], 'match' , 'pattern' =>'/^(1(([35][0-9])|(47)|[8][0126789]))\d{8}$/',
                 'message' => Yii::t('app', 'Your phone number is invalid.')],
             [['phone'], 'unique' , 'message' => Yii::t('app', 'Your phone number has been used.')],
