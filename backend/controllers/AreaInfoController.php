@@ -5,16 +5,15 @@ namespace backend\controllers;
 use Yii;
 use common\models\AreaInfo;
 use common\models\search\AreaInfoSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use common\core\BaseController;
 use yii\helpers\Url;
+use common\core\back\BackController;
 
 /**
  * AreaInfoController implements the CRUD actions for AreaInfo model.
  */
-class AreaInfoController extends BaseController
+class AreaInfoController extends BackController
 {
     /**
      * {@inheritDoc}

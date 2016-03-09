@@ -16,7 +16,7 @@ use Yii;
  *
  * @property MatchInfo[] $matchInfos
  */
-class AreaInfo extends \common\core\BaseModel
+class AreaInfo extends \common\core\base\BaseModel
 {
     /**
      * @inheritdoc

@@ -31,7 +31,7 @@ use yii\web\UploadedFile;
  * @property TeamInfo $team
  * @property User $user
  */
-class UserInfo extends \common\core\BaseModel
+class UserInfo extends \common\core\base\BaseModel
 {
     /**
      * @var mixed image the attribute for rendering the file input

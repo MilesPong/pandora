@@ -7,14 +7,14 @@ use common\models\TeamInfo;
 use common\models\search\TeamInfoSearch;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use common\core\BaseController;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
+use common\core\back\BackController;
 
 /**
  * TeamInfoController implements the CRUD actions for TeamInfo model.
  */
-class TeamInfoController extends BaseController
+class TeamInfoController extends BackController
 {
     /**
      * {@inheritDoc}
@@ -154,7 +154,7 @@ class TeamInfoController extends BaseController
     
     /**
      * {@inheritDoc}
-     * @see \common\core\BaseController::getBundleModel()
+     * @see \common\core\back\BackController::getBundleModel()
      */
     protected function getBundleModel()
     {

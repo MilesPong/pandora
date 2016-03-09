@@ -1,8 +1,13 @@
 <?php
-namespace common\core;
+namespace common\core\base;
 
 use yii\helpers\ArrayHelper;
 
+/**
+ * BaseModel is the base class of both backend and frontend models.
+ * 
+ * @author miles
+ */
 class BaseModel extends \yii\db\ActiveRecord
 {
 
@@ -43,7 +48,7 @@ class BaseModel extends \yii\db\ActiveRecord
     
     /**
      * Return the array of status.
-     * Different from [[getStatusArray]], it's uesd for dropdown list selection in form
+     * Different from getStatusArray(), it's uesd for dropdown list selection in form
      * @param string $includeDeleted
      * @return array
      */

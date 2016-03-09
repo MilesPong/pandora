@@ -21,7 +21,7 @@ use Yii;
  * @property UserInfo[] $userInfos
  * @property UserTeamInfo[] $userTeamInfos
  */
-class TeamInfo extends \common\core\BaseModel
+class TeamInfo extends \common\core\base\BaseModel
 {
     /**
      * @inheritdoc

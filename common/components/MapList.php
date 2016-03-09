@@ -6,8 +6,14 @@ use dektrium\user\models\User;
 use yii\helpers\ArrayHelper;
 use common\models\TeamInfo;
 use common\models\UserInfo;
-use common\core\BaseModel;
+use common\core\base\BaseModel;
 
+/**
+ * MapList is used to return map data of model for dropdownlist
+ * 
+ * @author miles
+ *
+ */
 class MapList extends Component
 {
 

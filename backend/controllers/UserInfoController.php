@@ -8,16 +8,15 @@ use common\models\search\UserInfoSearch;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
-use common\core\BaseController;
 use yii\web\UploadedFile;
 use common\core\UploadException;
-use common\components\MapList;
 use yii\helpers\ArrayHelper;
+use common\core\back\BackController;
 
 /**
  * UserInfoController implements the CRUD actions for UserInfo model.
  */
-class UserInfoController extends BaseController
+class UserInfoController extends BackController
 {
     /**
      * {@inheritDoc}
@@ -238,7 +237,7 @@ class UserInfoController extends BaseController
     
     /**
      * {@inheritDoc}
-     * @see \common\core\BaseController::getBundleModel()
+     * @see \common\core\back\BackController::getBundleModel()
      */
     protected function getBundleModel()
     {

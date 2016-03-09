@@ -1,8 +1,8 @@
 <?php
-namespace common\core;
+namespace common\core\back;
 
 use Yii;
-use yii\web\Controller;
+use common\core\base\BaseController;
 use yii\helpers\Url;
 use yii\web\MethodNotAllowedHttpException;
 use common\components\MapList;
@@ -10,10 +10,11 @@ use yii\filters\VerbFilter;
 use yii\base\InvalidConfigException;
 
 /**
- * @author miles
+ * BackController is the base class of the backend controllers.
  * 
+ * @author miles
  */
-abstract class BaseController extends Controller
+abstract class BackController extends BaseController
 {
     /**
      * {@inheritDoc}
@@ -39,11 +40,11 @@ abstract class BaseController extends Controller
      * @return BaseModel the loaded model
      */
     abstract protected function findModel($id);
-
+    
     /**
      * Blocks the info.
      *
-     * @param integer $id            
+     * @param integer $id
      * @return Response
      */
     public function actionBlock($id)
@@ -56,14 +57,14 @@ abstract class BaseController extends Controller
             $model->block();
             Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Info has been blocked'));
         }
-        
+    
         return $this->redirect(Url::previous('actions-redirect'));
     }
-
+    
     /**
      * Revert the info.
      *
-     * @param integer $id            
+     * @param integer $id
      * @return Response
      */
     public function actionRevert($id)
@@ -73,7 +74,7 @@ abstract class BaseController extends Controller
             $model->revert();
             Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Info has been revert'));
         }
-        
+    
         return $this->redirect(Url::previous('actions-redirect'));
     }
     
@@ -86,7 +87,7 @@ abstract class BaseController extends Controller
     
     /**
      * Bulk actions, include `block`, `unblock`, `delete`
-     * 
+     *
      * @throws MethodNotAllowedHttpException
      * @return \yii\web\Response
      * @throws InvalidConfigException if there is no primary key difined
@@ -119,5 +120,4 @@ abstract class BaseController extends Controller
         }
         return $this->redirect(Url::previous('actions-redirect'));
     }
-    
 }
