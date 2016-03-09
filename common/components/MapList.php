@@ -12,6 +12,21 @@ class MapList extends Component
 {
 
     /**
+     * @var integer bulk action `block`
+     */
+    const ACTION_BLOCK = 2;
+
+    /**
+     * @var integer bulk action `unblock`
+     */
+    const ACTION_UNBLOCK = 1;
+
+    /**
+     * @var integer bulk action `delete`
+     */
+    const ACTION_DELETE = 3;
+
+    /**
      * Get map data of User
      * 
      * @return array
@@ -29,7 +44,8 @@ class MapList extends Component
      * @param bool $unDefinedTeam whether to add undefined team selection
      * @return array the array of TeamInfo
      */
-    public function getTeamInfoList($onlyActive = true, $unDefinedTeam = true) {
+    public function getTeamInfoList($onlyActive = true, $unDefinedTeam = true)
+    {
         if ($onlyActive) {
             $where = ['status' => BaseModel::STATUS_ACTIVE];
             $models = TeamInfo::find()->where($where)->asArray()->all();
@@ -52,7 +68,8 @@ class MapList extends Component
      * @param string $onlyAcitve
      * @return array
      */
-    public function getUserInfoList($onlyAcitve = true) {
+    public function getUserInfoList($onlyAcitve = true)
+    {
         if ($onlyAcitve) {
             $where = ['status' => BaseModel::STATUS_ACTIVE];
             $models = UserInfo::find()->where($where)->asArray()->all();
@@ -61,5 +78,18 @@ class MapList extends Component
         }
         
         return ArrayHelper::map($models, 'uid', 'truename');
+    }
+    
+    /**
+     * Get the bulk actions array for dropdownlist
+     * @return string[]
+     */
+    public function getBulkActionsList()
+    {
+        return [
+            self::ACTION_BLOCK => \Yii::t('app', 'Block'),
+            self::ACTION_UNBLOCK =>\Yii::t('app', 'Unblock'),
+            self::ACTION_DELETE => \Yii::t('app', 'Delete'),
+        ];
     }
 }

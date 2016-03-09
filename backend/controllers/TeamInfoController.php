@@ -9,6 +9,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\core\BaseController;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 
 /**
  * TeamInfoController implements the CRUD actions for TeamInfo model.
@@ -21,7 +22,7 @@ class TeamInfoController extends BaseController
      */
     public function behaviors()
     {
-        return [
+        return ArrayHelper::merge(parent::behaviors(), [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -30,7 +31,7 @@ class TeamInfoController extends BaseController
                     ]
                 ]
             ]
-        ];
+        ]);
     }
 
     /**
@@ -43,6 +44,7 @@ class TeamInfoController extends BaseController
         Url::remember('', 'actions-redirect');
         $searchModel = new TeamInfoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = 6;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -148,5 +150,14 @@ class TeamInfoController extends BaseController
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    
+    /**
+     * {@inheritDoc}
+     * @see \common\core\BaseController::getBundleModel()
+     */
+    protected function getBundleModel()
+    {
+        return Yii::createObject(TeamInfo::className());
     }
 }

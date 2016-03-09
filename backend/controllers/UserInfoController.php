@@ -11,6 +11,8 @@ use yii\helpers\Url;
 use common\core\BaseController;
 use yii\web\UploadedFile;
 use common\core\UploadException;
+use common\components\MapList;
+use yii\helpers\ArrayHelper;
 
 /**
  * UserInfoController implements the CRUD actions for UserInfo model.
@@ -23,7 +25,7 @@ class UserInfoController extends BaseController
      */
     public function behaviors()
     {
-        return [
+        return ArrayHelper::merge(parent::behaviors(), [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -32,7 +34,7 @@ class UserInfoController extends BaseController
                     ]
                 ]
             ]
-        ];
+        ]);
     }
 
     /**
@@ -232,6 +234,15 @@ class UserInfoController extends BaseController
         return $this->render('upload', [
             'model' => $model
         ]);
+    }
+    
+    /**
+     * {@inheritDoc}
+     * @see \common\core\BaseController::getBundleModel()
+     */
+    protected function getBundleModel()
+    {
+        return Yii::createObject(UserInfo::className());
     }
     
 }

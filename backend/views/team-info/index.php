@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\search\TeamInfoSearch */
@@ -26,7 +27,15 @@ if (Yii::$app->controller->action->id == 'trash') {
     <p>
         <?= Html::a(Yii::t('app', 'Create Team Info'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    
+    <?= Html::beginForm(['bulk'], 'post', ['id' => 'bulk-action-form'])?>
+    <?= HTml::dropDownList('grid-bulk-actions', 'null', Yii::$app->mapList->bulkActionsList, [
+	    'class' => 'form-control col-md-3',
+	    'style' => ['width' => '150px'],
+	    'prompt' => Yii::t('app', 'Bulks Actions')]); ?>
+    <?= Html::submitButton(Yii::t('app', 'Apply'), ['class' => 'btn btn-primary']) ?>
 
+	<?php Pjax::begin() ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -79,5 +88,8 @@ if (Yii::$app->controller->action->id == 'trash') {
             ],
         ],
     ]); ?>
+    
+    <?php Pjax::end() ?>
+    <?= Html::endForm(); ?>
 
 </div>
