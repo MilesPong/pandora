@@ -53,7 +53,7 @@ use kartik\file\FileInput;
 
     <?= $form->field($model, 'memo')->textarea(['rows' => 4]) ?>
 
-    <?= $form->field($model, 'status')->dropDownList($model->getStatusSelection(), ['prompt' => Yii::t('app', 'Default to Active')]) ?>
+    <?= $form->field($model, 'status')->dropDownList(Yii::$app->mapList->getStatusList(), ['prompt' => Yii::t('app', 'Default to Active')]) ?>
 </div>
 
 </div>

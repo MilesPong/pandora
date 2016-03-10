@@ -79,7 +79,7 @@ if (Yii::$app->controller->action->id == 'trash') {
                     }
                 },
                 'format' => 'raw',
-                'filter' => Html::activeDropDownList($searchModel, 'status', isset($envTrash)?$searchModel->getAllStatus(true):$searchModel->allstatus, ['class' => 'form-control', 'prompt' => Yii::t('app', '-- Please select --')])
+                'filter' => Html::activeDropDownList($searchModel, 'status', isset($envTrash)?Yii::$app->mapList->getStatusList(true):Yii::$app->mapList->getStatusList(), ['class' => 'form-control', 'prompt' => Yii::t('app', '-- Please select --')])
                 ],
             [
                     'header' => Yii::t('app', 'Action'),

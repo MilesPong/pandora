@@ -47,25 +47,6 @@ class BaseModel extends \yii\db\ActiveRecord
     }
     
     /**
-     * Return the array of status.
-     * Different from getStatusArray(), it's uesd for dropdown list selection in form
-     * @param string $includeDeleted
-     * @return array
-     */
-    public function getStatusSelection($includeDeleted = false) {
-        $array = [
-            self::STATUS_ACTIVE => \Yii::t('app', 'Active'),
-            self::STATUS_INACTIVE => \Yii::t('app', 'Inactive'),
-        ];
-        
-        if ($includeDeleted) {
-            $array = $array + [self::STATUS_DELETED => \Yii::t('app', 'Deleted')];
-        }
-        
-        return $array;
-    }
-    
-    /**
      * @return bool Whether the status is deleted or not.
      */
     public function getIsDeleted()
@@ -124,25 +105,6 @@ class BaseModel extends \yii\db\ActiveRecord
         
         $this->softDelete();
         return false;        
-    }
-    
-    /**
-     * @param bool $showDeleted define whether to show all status or only delete status
-     * @return array array of status
-     */
-    public function getAllStatus($showDeleted = false) {
-        $status = [
-            self::STATUS_ACTIVE => \Yii::t('app', 'Active'),
-            self::STATUS_INACTIVE => \Yii::t('app', 'Inactive'),
-        ];
-        
-        if ($showDeleted) {
-            $delete = [self::STATUS_DELETED => \Yii::t('app', 'Deleted')];
-//             $status = ArrayHelper::merge($status, $delete);
-            return $delete;
-        }
-        
-        return $status;
     }
     
     /**

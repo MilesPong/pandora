@@ -98,4 +98,24 @@ class MapList extends Component
             self::ACTION_DELETE => \Yii::t('app', 'Delete'),
         ];
     }
+    
+    /**
+     * @param bool $showDeleted define whether to show all status included deleted
+     * @return array array of status
+     */
+    public function getStatusList($showDeleted = false) {
+        $status = [
+            BaseModel::STATUS_ACTIVE => \Yii::t('app', 'Active'),
+            BaseModel::STATUS_INACTIVE => \Yii::t('app', 'Inactive'),
+        ];
+    
+        if ($showDeleted) {
+            //             $delete = [self::STATUS_DELETED => \Yii::t('app', 'Deleted')];
+            //             $status = ArrayHelper::merge($status, $delete);
+            //             return $delete;
+            $status = $status + [BaseModel::STATUS_DELETED => \Yii::t('app', 'Deleted')];
+        }
+    
+        return $status;
+    }
 }
