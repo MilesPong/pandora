@@ -35,7 +35,6 @@ return [
         'urlManagerBackend' => [
                 // here is your Back-end URL rules
                 'class' => 'yii\web\urlManager',
-                'baseUrl' => 'Your Backend URL', // Your Backend URL,e.g: '//backend.dev'
                 'enablePrettyUrl' => true,
                 'showScriptName' => false 
         ],

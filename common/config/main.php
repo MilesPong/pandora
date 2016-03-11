@@ -47,26 +47,30 @@ return [
         ]
     ],
     'modules' => [
-            'user' => [
-                    'class' => 'dektrium\user\Module',
-                    'admins' => ['admin', 'miles'],                    
-                    // you will configure your module inside this file
-                    // or if need different configuration for frontend and backend you may
-                    // configure in needed configs
-            ],
+        'user' => [
+            'class' => 'dektrium\user\Module',
+            // Users who have admin right to access the admin panel of user/admin.
+            // Plaease note that RBAC is not functioned with this `user/admin` action,
+            // you must specify set the admin to give the control right.
+            // It's suggested to set the value in the main-local.php
+            'admins' => ['admin','miles']
+            // you will configure your module inside this file
+            // or if need different configuration for frontend and backend you may
+            // configure in needed configs
+        ]
     ],
-    /* 'as access' => [
+    // The actions listed here will be allowed to everyone including guests.
+    // So, 'admin/*' should not appear here in the production, of course.
+    // But in the earlier stages of your development, you may probably want to
+    // add a lot of actions here until you finally completed setting up rbac,
+    // otherwise you may not even take a first step.
+    'as access' => [
             'class' => 'mdm\admin\components\AccessControl',
             'allowActions' => [
-                    'user/*',
-                    'site/*',
-                    'admin/*',
+                    //'admin/*',
                     //'some-controller/some-action',
-                    // The actions listed here will be allowed to everyone including guests.
-                    // So, 'admin/*' should not appear here in the production, of course.
-                    // But in the earlier stages of your development, you may probably want to
-                    // add a lot of actions here until you finally completed setting up rbac,
-                    // otherwise you may not even take a first step.
+                    // Uncomment the next line if you are in the very start deployment and still not set the RBAC yet.
+                    //'*',
             ]
-    ], */
+    ],
 ];

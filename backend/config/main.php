@@ -68,7 +68,6 @@ return [
         'urlManagerFrontend' => [
             // here is your Front-end URL rules
             'class' => 'yii\web\urlManager',
-            'baseUrl' => 'Your Frontend URL', // Your Frontend URL,e.g: '//frontend.dev'
             'enablePrettyUrl' => true,
             'showScriptName' => false
         ],
