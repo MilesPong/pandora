@@ -125,4 +125,12 @@ class AreaInfoController extends BackController
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
+    /**
+     * {@inheritDoc}
+     * @see \common\core\back\BackController::getBundleModel()
+     */
+    protected function getBundleModel() {
+        return \Yii::createObject(AreaInfo::className());
+    }
 }
