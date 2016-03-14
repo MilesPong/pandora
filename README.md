@@ -1,19 +1,19 @@
 Pandora
 ========
 
-Info Reserves.
+A manager system include `frontend` and `backend` of football team.
 
 Composer
 -------------
 
-1. Install composer
+1.Install composer
 
 ```bash
 curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 ```
 
-2. Get dependencies
+2.Get dependencies
 
 ```bash
 cd $PROJECT_DIR
@@ -42,7 +42,7 @@ Adjust your PHP settings according to the returned results.
 Preparing application
 -----------------------
 
-1. Initialize environment
+### Initialize environment
 
 ```bash
 cd $PROJECT_DIR
@@ -53,11 +53,11 @@ Two environments are avaiable, `Prod` and `Dev`.
 
 Now you may have all the whole files project needed.
 
-2. Edit config
+### Edit config
 
 Create a new database and adjust the `components['db']` configuration in `common/config/main-local.php` accordingly.
 
-3. Mirgrate
+### Mirgrate
 
 Apply migrations with console command `./yii migrate`
 
@@ -68,15 +68,15 @@ Apply migrations with console command `./yii migrate`
 ./yii migrate
 ```
 
-4. RBAC
+### RBAC
 
-You should uncomment the the line include `*` in the `as access` section in the `common\config\main.php` to do the first RBAC settings.
+1.You should uncomment the the line include `*` in the `as access` section in the `common\config\main.php` to do the first RBAC settings. While `allowActions` is set to `*`, it means everybody is allowed to access any controllers and actions, so remember to comment it back as soon as you have your RBAC set.
 
-While `allowActions` is set to `*`, it means everybody is allowed to access any controllers and actions, so remember to comment it back as soon as you have your RBAC set.
+2.Register a user and login, add a role `guest` (which is defined in `defaultRoles` under `common\config\main.php`) in route `admin\role`. Then add some proper permissions and routes for this role, e.g., `site\*`, `user\*`, etc. Otherwise **unregister** user may not have the right to access any page include register.
 
 More infos please check [yii2-admin](https://github.com/mdmsoft/yii2-admin)
 
-5. User admin
+### User managerment
 
 There is an initial value set in the `common\config\main.php`, you could check it in the `admins` array.
 
@@ -84,14 +84,14 @@ The same as RBAC, it's necessary to set your value for the 1st deployment in the
 
 More infos please check [yii2-user](https://github.com/dektrium/yii2-user)
 
-6. Domain Url
+### Domain Url
 
 Check the files `backend\config\main-local.php` and `frontend\config\main-local.php`.
 
 Set the frontend and backend url in the `baseUrl` section.
 
 Web server
------------
+--------------
 
 Set document roots of your web server:
 
@@ -108,6 +108,7 @@ Extensions mentioned below are included.
 - [dektrium/yii2-user](https://github.com/dektrium/yii2-user.git)
 - [mdmsoft/yii2-admin](https://github.com/mdmsoft/yii2-admin.git)
 
+***
 
 Yii 2 Advanced Project Template
 ---------------------------------------------
@@ -136,6 +137,10 @@ common
     mail/                contains view files for e-mails
     models/              contains model classes used in both backend and frontend
 console
+    core/               contains core files
+        base/               contains base for both backend and frontend classes
+        back/               contains backend's parent classes
+        front/              contains frontend's parent classes
     config/              contains console configurations
     controllers/         contains console controllers (commands)
     migrations/          contains database migrations

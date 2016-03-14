@@ -28,7 +28,11 @@ return [
                 'currencyCode' => 'CNY' 
         ],
         'authManager' => [
-                'class' => 'yii\rbac\DbManager',    
+            'class' => 'yii\rbac\DbManager',
+            // Deault role for guest, you must add `guest` role
+            // and proper permissions or routes for unregisters(vistors).
+            // E.g. `site/*`, `user\login`, etc
+            'defaultRoles' => ['guest'],
         ],
         'urlManager' => [ 
                 // here is your URL rules
