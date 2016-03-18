@@ -5,12 +5,12 @@ namespace common\models\search;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\AreaInfo;
+use common\models\PositionInfo;
 
 /**
- * AreaInfoSearch represents the model behind the search form about `common\models\AreaInfo`.
+ * PositionInfoSearch represents the model behind the search form about `common\models\PositionInfo`.
  */
-class AreaInfoSearch extends AreaInfo
+class PositionInfoSearch extends PositionInfo
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class AreaInfoSearch extends AreaInfo
     public function rules()
     {
         return [
-            [['area_id'], 'integer'],
-            [['area_name', 'position_lng', 'position_lat', 'memo', 'status'], 'safe'],
+            [['position_id'], 'integer'],
+            [['position_name'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class AreaInfoSearch extends AreaInfo
      */
     public function search($params)
     {
-        $query = AreaInfo::find();
+        $query = PositionInfo::find();
 
         // add conditions that should always apply here
 
@@ -53,25 +53,16 @@ class AreaInfoSearch extends AreaInfo
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
-            $query->where('0=1');
+            // $query->where('0=1');
             return $dataProvider;
         }
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'area_id' => $this->area_id,
-            'status' => $this->status,
+            'position_id' => $this->position_id,
         ]);
-        
-        // default to show undeleted data
-        if ($this->status == null) {
-            $query->andFilterWhere(['<>', 'status', self::STATUS_DELETED]);
-        }
 
-        $query->andFilterWhere(['like', 'area_name', $this->area_name])
-            ->andFilterWhere(['like', 'position_lng', $this->position_lng])
-            ->andFilterWhere(['like', 'position_lat', $this->position_lat])
-            ->andFilterWhere(['like', 'memo', $this->memo]);
+        $query->andFilterWhere(['like', 'position_name', $this->position_name]);
 
         return $dataProvider;
     }

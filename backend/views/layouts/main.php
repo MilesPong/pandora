@@ -55,6 +55,12 @@ AppAsset::register($this);
                 ['label' => Yii::t('app', 'Trash'), 'url' => ['/team-info/trash']]
             ]
         ],
+        ['label' => 'OtherInfo', 'url' => ['#'], 'visible' => !Yii::$app->user->isGuest,
+        'items' => [
+                ['label' => Yii::t('app', 'AreaInfo'), 'url' => ['/area-info']],
+                ['label' => Yii::t('app', 'PositionInfo'), 'url' => ['/position-info']]
+            ]
+        ],
     ];
 //     if (Yii::$app->user->isGuest) {
 //         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];

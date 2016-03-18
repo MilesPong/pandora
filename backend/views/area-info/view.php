@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\AreaInfo */
 
-$this->title = $model->area_id;
+$this->title = $model->area_name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Area Infos'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -33,7 +33,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'position_lng',
             'position_lat',
             'memo:ntext',
-            'status',
+            [
+                'attribute'=>'status',
+                'value' => $model->status == $model::STATUS_ACTIVE ? 
+                    Yii::t('app', 'Active') : ($model->status == $model::STATUS_INACTIVE ? 
+                            Yii::t('app', 'Inactive') : Yii::t('app', 'Deleted'))                    
+            ],
         ],
     ]) ?>
 

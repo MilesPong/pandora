@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\TeamInfo */
 
-$this->title = $model->team_id;
+$this->title = $model->team_name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Team Infos'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
