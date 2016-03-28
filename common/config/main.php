@@ -69,12 +69,12 @@ return [
     // add a lot of actions here until you finally completed setting up rbac,
     // otherwise you may not even take a first step.
     'as access' => [
-            'class' => 'mdm\admin\components\AccessControl',
-            'allowActions' => [
-                    //'admin/*',
-                    //'some-controller/some-action',
-                    // Uncomment the next line if you are in the very start deployment and still not set the RBAC yet.
-                    //'*',
-            ]
+           'class' => 'mdm\admin\components\AccessControl',
+           'allowActions' => [
+                   //'admin/*',
+                   //'some-controller/some-action',
+                   // Uncomment the next line if you are in the very start deployment and still not set the RBAC yet.
+                   //'*',
+           ]
     ],
 ];

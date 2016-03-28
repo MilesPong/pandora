@@ -15,8 +15,11 @@ mv composer.phar /usr/local/bin/composer
 
 2.Get dependencies
 
+To manage bower and npm package dependencies through Composer, you need to install (globally) [fxp/composer-asset-plugin](https://packagist.org/packages/fxp/composer-asset-plugin):
+
 ```bash
 cd $PROJECT_DIR
+composer global require "fxp/composer-asset-plugin:~1.1.1"
 composer install
 ```
 
@@ -58,6 +61,8 @@ Now you may have all the whole files project needed.
 Create a new database and adjust the `components['db']` configuration in `common/config/main-local.php` accordingly.
 
 ### Mirgrate
+
+**Notice**: You should **comment** the `as access` part in the `common\config\main.php` to allow database migrations through `console`
 
 Apply migrations with console command `./yii migrate`
 
