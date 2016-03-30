@@ -58,7 +58,8 @@ AppAsset::register($this);
         ['label' => 'OtherInfo', 'url' => ['#'], 'visible' => !Yii::$app->user->isGuest,
         'items' => [
                 ['label' => Yii::t('app', 'AreaInfo'), 'url' => ['/area-info']],
-                ['label' => Yii::t('app', 'PositionInfo'), 'url' => ['/position-info']]
+                ['label' => Yii::t('app', 'PositionInfo'), 'url' => ['/position-info']],
+                ['label' => Yii::t('app', 'UserTeamInfo'), 'url' => ['/user-team-info']]
             ]
         ],
     ];

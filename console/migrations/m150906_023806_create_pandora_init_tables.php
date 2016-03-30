@@ -199,6 +199,7 @@ class m150906_023806_create_pandora_init_tables extends Migration
         $this->addForeignKey('fk_mp_user_8025_09','{{%user_info}}', 'user_id', '{{%user}}', 'id', 'RESTRICT', 'CASCADE' );
         $this->addForeignKey('fk_mp_position_info_804_010','{{%user_team_info}}', 'position_id', '{{%position_info}}', 'position_id', 'RESTRICT', 'CASCADE' );
         $this->addForeignKey('fk_mp_team_info_804_011','{{%user_team_info}}', 'team_id', '{{%team_info}}', 'team_id', 'RESTRICT', 'CASCADE' );
+        $this->addForeignKey('fk_mp_user_info_804_012','{{%user_team_info}}', 'uid', '{{%user_info}}', 'uid', 'RESTRICT', 'CASCADE' );
         $this->execute('SET foreign_key_checks = 1;');
     }
 

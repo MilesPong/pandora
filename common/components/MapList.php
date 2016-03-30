@@ -7,6 +7,7 @@ use yii\helpers\ArrayHelper;
 use common\models\TeamInfo;
 use common\models\UserInfo;
 use common\core\base\BaseModel;
+use common\models\PositionInfo;
 
 /**
  * MapList is used to return map data of model for dropdownlist
@@ -41,6 +42,17 @@ class MapList extends Component
     {
         $models = User::find()->asArray()->all();
         return ArrayHelper::map($models, 'id', 'username');
+    }
+    
+    /**
+     * Get map data of PositionInfo
+     * 
+     * @return array
+     */
+    public function getPositionList()
+    {
+        $model = PositionInfo::find()->asArray()->all();
+        return ArrayHelper::map($model, 'position_id', 'position_name');
     }
     
     /**

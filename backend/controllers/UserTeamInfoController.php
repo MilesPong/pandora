@@ -3,22 +3,21 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\AreaInfo;
-use common\models\search\AreaInfoSearch;
+use common\models\UserTeamInfo;
+use common\models\search\UserTeamInfoSearch;
+use common\core\back\BackController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
-use common\core\back\BackController;
 use yii\helpers\ArrayHelper;
 
 /**
- * AreaInfoController implements the CRUD actions for AreaInfo model.
+ * UserTeamInfoController implements the CRUD actions for UserTeamInfo model.
  */
-class AreaInfoController extends BackController
+class UserTeamInfoController extends BackController
 {
     /**
-     * {@inheritDoc}
-     * @see \yii\base\Component::behaviors()
+     * @inheritdoc
      */
     public function behaviors()
     {
@@ -35,14 +34,15 @@ class AreaInfoController extends BackController
     }
 
     /**
-     * Lists all AreaInfo models.
+     * Lists all UserTeamInfo models.
      * @return mixed
      */
     public function actionIndex()
     {
         Url::remember('', 'actions-redirect');
-        $searchModel = new AreaInfoSearch();
+        $searchModel = new UserTeamInfoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = 6;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -51,26 +51,26 @@ class AreaInfoController extends BackController
     }
     
     /**
-     * Lists all AreaInfo models with trash status.
+     * Lists all Deleted UserTeamInfo models.
      * @return mixed
      */
     public function actionTrash()
     {
         Url::remember('', 'actions-redirect');
-        $searchModel = new AreaInfoSearch();
-        $queryParams = Yii::$app->request->queryParams;
-        $queryParams['AreaInfoSearch']['status'] = $searchModel::STATUS_DELETED;
+        $searchModel = new UserTeamInfoSearch();
+        $queryParams = array_merge(array(), \Yii::$app->request->getQueryParams());
+        $queryParams['UserTeamInfoSearch']['status'] = $searchModel::STATUS_DELETED;
         $dataProvider = $searchModel->search($queryParams);
         $dataProvider->pagination->pageSize = 6;
     
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $dataProvider
         ]);
     }
 
     /**
-     * Displays a single AreaInfo model.
+     * Displays a single UserTeamInfo model.
      * @param integer $id
      * @return mixed
      */
@@ -82,17 +82,16 @@ class AreaInfoController extends BackController
     }
 
     /**
-     * Creates a new AreaInfo model.
+     * Creates a new UserTeamInfo model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new AreaInfo();
-        $model->loadDefaultValues();
+        $model = new UserTeamInfo();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->area_id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -101,7 +100,7 @@ class AreaInfoController extends BackController
     }
 
     /**
-     * Updates an existing AreaInfo model.
+     * Updates an existing UserTeamInfo model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -111,7 +110,7 @@ class AreaInfoController extends BackController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->area_id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -120,7 +119,7 @@ class AreaInfoController extends BackController
     }
 
     /**
-     * Deletes an existing AreaInfo model.
+     * Deletes an existing UserTeamInfo model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -133,15 +132,15 @@ class AreaInfoController extends BackController
     }
 
     /**
-     * Finds the AreaInfo model based on its primary key value.
+     * Finds the UserTeamInfo model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return AreaInfo the loaded model
+     * @return UserTeamInfo the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = AreaInfo::findOne($id)) !== null) {
+        if (($model = UserTeamInfo::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -152,7 +151,8 @@ class AreaInfoController extends BackController
      * {@inheritDoc}
      * @see \common\core\back\BackController::getBundleModel()
      */
-    protected function getBundleModel() {
-        return \Yii::createObject(AreaInfo::className());
+    protected function getBundleModel()
+    {
+        return \Yii::createObject(UserTeamInfo::className());
     }
 }
