@@ -8,6 +8,7 @@ use common\models\TeamInfo;
 use common\models\UserInfo;
 use common\core\base\BaseModel;
 use common\models\PositionInfo;
+use common\models\AreaInfo;
 
 /**
  * MapList is used to return map data of model for dropdownlist
@@ -56,6 +57,23 @@ class MapList extends Component
     }
     
     /**
+     * Get map data of AreaInfo
+     *
+     * @return array
+     */
+    public function getAreaList($onlyActive = true)
+    {
+        if ($onlyActive) {
+            $where = ['status' => BaseModel::STATUS_ACTIVE];
+            $models = AreaInfo::find()->where($where)->asArray()->all();
+        } else {
+            $models = AreaInfo::find()->asArray()->all();
+        }
+        
+        return ArrayHelper::map($models, 'area_id', 'area_name');
+    }
+    
+    /**
      * Get relative table data TeamInfo
      *
      * @param bool $onlyActive whether to show active status or not
@@ -83,12 +101,12 @@ class MapList extends Component
 
     /**
      * Get map data of UserInfo
-     * @param string $onlyAcitve
+     * @param string $onlyActive
      * @return array
      */
-    public function getUserInfoList($onlyAcitve = true)
+    public function getUserInfoList($onlyActive = true)
     {
-        if ($onlyAcitve) {
+        if ($onlyActive) {
             $where = ['status' => BaseModel::STATUS_ACTIVE];
             $models = UserInfo::find()->where($where)->asArray()->all();
         } else {

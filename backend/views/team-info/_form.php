@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'team_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'captain_id')->dropDownList(Yii::$app->mapList->UserInfoList, ['prompt' => Yii::t('app', 'Please choose captain')])?>
+    <?= $form->field($model, 'captain_id')->dropDownList(Yii::$app->mapList->UserInfoList, ['prompt' => Yii::t('app', 'Please choose a captain')])?>
 
     <?= $form->field($model, 'manager')->textInput(['maxlength' => true]) ?>
 

@@ -80,8 +80,8 @@ class m150906_023806_create_pandora_init_tables extends Migration
                         'area_id' => 'INT(10) UNSIGNED NOT NULL',
                         'home_id' => 'INT(10) UNSIGNED NOT NULL',
                         'home_score' => 'TINYINT(4) UNSIGNED NOT NULL',
-                        'visters_id' => 'INT(10) UNSIGNED NOT NULL',
-                        'visters_score' => 'TINYINT(4) UNSIGNED NOT NULL',
+                        'visiters_id' => 'INT(10) UNSIGNED NOT NULL',
+                        'visiters_score' => 'TINYINT(4) UNSIGNED NOT NULL',
                         'hold_time' => 'INT(10) UNSIGNED NOT NULL',
                         'full_time' => 'VARCHAR(25) NOT NULL',
                         'memo' => 'TEXT NULL',
@@ -176,7 +176,7 @@ class m150906_023806_create_pandora_init_tables extends Migration
         $this->createIndex('idx_UNIQUE_match_id_7965_02','mp_judge_info','match_id',1);
         $this->createIndex('idx_area_id_7981_03','mp_match_info','area_id',0);
         $this->createIndex('idx_home_id_7981_04','mp_match_info','home_id',0);
-        $this->createIndex('idx_visters_id_7981_05','mp_match_info','visters_id',0);
+        $this->createIndex('idx_visiters_id_7981_05','mp_match_info','visiters_id',0);
         $this->createIndex('idx_match_id_7993_06','mp_match_user_detail','match_id',0);
         $this->createIndex('idx_uid_7993_07','mp_match_user_detail','uid',0);
         $this->createIndex('idx_captain_id_8013_08','mp_team_info','captain_id',0);
@@ -191,7 +191,7 @@ class m150906_023806_create_pandora_init_tables extends Migration
         $this->addForeignKey('fk_mp_match_info_7963_01','{{%judge_info}}', 'match_id', '{{%match_info}}', 'match_id', 'RESTRICT', 'CASCADE' );
         $this->addForeignKey('fk_mp_area_info_7978_02','{{%match_info}}', 'area_id', '{{%area_info}}', 'area_id', 'RESTRICT', 'CASCADE' );
         $this->addForeignKey('fk_mp_team_info_7978_03','{{%match_info}}', 'home_id', '{{%team_info}}', 'team_id', 'RESTRICT', 'CASCADE' );
-        $this->addForeignKey('fk_mp_team_info_7978_04','{{%match_info}}', 'visters_id', '{{%team_info}}', 'team_id', 'RESTRICT', 'CASCADE' );
+        $this->addForeignKey('fk_mp_team_info_7978_04','{{%match_info}}', 'visiters_id', '{{%team_info}}', 'team_id', 'RESTRICT', 'CASCADE' );
         $this->addForeignKey('fk_mp_match_info_7991_05','{{%match_user_detail}}', 'match_id', '{{%match_info}}', 'match_id', 'RESTRICT', 'CASCADE' );
         $this->addForeignKey('fk_mp_user_info_7991_06','{{%match_user_detail}}', 'uid', '{{%user_info}}', 'uid', 'RESTRICT', 'CASCADE' );
         $this->addForeignKey('fk_mp_user_info_8012_07','{{%team_info}}', 'captain_id', '{{%user_info}}', 'uid', 'RESTRICT', 'CASCADE' );

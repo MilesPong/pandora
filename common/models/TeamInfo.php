@@ -79,7 +79,7 @@ class TeamInfo extends \common\core\base\BaseModel
      */
     public function getMatchInfos0()
     {
-        return $this->hasMany(MatchInfo::className(), ['visters_id' => 'team_id']);
+        return $this->hasMany(MatchInfo::className(), ['visiters_id' => 'team_id']);
     }
 
     /**

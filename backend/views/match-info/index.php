@@ -4,30 +4,29 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 use yii\jui\DatePicker;
-
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\search\UserInfoSearch */
+/* @var $searchModel common\models\search\MatchInfoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-// $this->title = Yii::t('app', 'User Infos');
+// $this->title = Yii::t('app', 'Match Infos');
 // $this->params['breadcrumbs'][] = $this->title;
 if (Yii::$app->controller->action->id == 'trash') {
     $this->title = Yii::t('app', 'Trash');
-    $this->params['breadcrumbs'][] = ['label'=>Yii::t('app', 'User Infos'), 'url' => ['index']];
+    $this->params['breadcrumbs'][] = ['label'=>Yii::t('app', 'Match Infos'), 'url' => ['index']];
     $this->params['breadcrumbs'][] = Yii::t('app', 'Trash');
     $envTrash = true;
 } else {
-    $this->title = Yii::t('app', 'User Infos');
+    $this->title = Yii::t('app', 'Match Infos');
     $this->params['breadcrumbs'][] = $this->title;
 }
 ?>
-<div class="user-info-index">
+<div class="match-info-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create User Info'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create Match Info'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     
     <?= Html::beginForm(['bulk'], 'post', ['id' => 'bulk-action-form'])?>
@@ -36,81 +35,68 @@ if (Yii::$app->controller->action->id == 'trash') {
 	    'style' => ['width' => '150px'],
 	    'prompt' => Yii::t('app', 'Bulks Actions')]); ?>
     <?= Html::submitButton(Yii::t('app', 'Apply'), ['class' => 'btn btn-primary']) ?>
-
-    <?php Pjax::begin() ?>
-    <?= GridView::widget([
+    
+<?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'options' => ['id' => 'bulk-pjax'],
         'columns' => [
 //             ['class' => 'yii\grid\SerialColumn'],
             ['class' => yii\grid\CheckboxColumn::className()],
+
+            'match_id',
             [
-                'attribute' => 'uid',
+                'attribute' => 'area_id',
+                'value' => 'area.area_name',
+                'filter' => Html::activeDropDownList($searchModel, 'area_id', Yii::$app->mapList->AreaList, ['class' => 'form-control', 'prompt' => Yii::t('app', '-- Please select --')])
             ],
             [
-                'attribute' => 'truename',
+                'attribute' => 'home_id',
+                'value' => 'home.team_name',
+                'filter' => Html::activeDropDownList($searchModel, 'home_id', Yii::$app->mapList->getTeamInfoList(true, false), ['class' => 'form-control', 'prompt' => Yii::t('app', '-- Please select --')])
             ],
+            'home_score',
             [
-                'attribute' => 'user_id',
-                'value' => 'user.username',
+                'attribute' => 'visiters_id',
+                'value' => 'visiters.team_name',
+                'filter' => Html::activeDropDownList($searchModel, 'visiters_id', Yii::$app->mapList->getTeamInfoList(true, false), ['class' => 'form-control', 'prompt' => Yii::t('app', '-- Please select --')])
             ],
-//             'birthday:date',
+            'visiters_score',
             [
-                'attribute' => 'team_id',
-                'value' => 'team.team_name',
-                'filter' => Html::activeDropDownList($searchModel, 'team_id', Yii::$app->mapList->teamInfoList, ['class' => 'form-control', 'prompt' => Yii::t('app', '-- Please select --')])
-            ],
-            [
-                'attribute' => 'birthday',
+                'attribute' => 'hold_time',
                 'value' => function ($model) {
-                    if ($model->birthday){
-                        return Yii::t('app', '{0, date, YYYY-MM-dd}', [$model->birthday]);                    
+                    if ($model->hold_time){
+                        return Yii::t('app', '{0, date, YYYY-MM-dd}', [$model->hold_time]);                    
                     }
                 },
                 'filter' => DatePicker::widget([
-                        'model'      => $searchModel,
-                        'attribute'  => 'birthday',
-                        'dateFormat' => 'php:Y-m-d',
-                        'options' => [
-                                'class' => 'form-control'
-                        ]
+                    'model'      => $searchModel,
+                    'attribute'  => 'hold_time',
+                    'dateFormat' => 'php:Y-m-d',
+                    'options' => [
+                        'class' => 'form-control'
+                    ]
                 ]),
             ],
-            'phone',
-            'email:email',
-//             'qq',
-//             'address',
-//             [
-//                 'attribute' => 'team_id',
-//                 'value' => 'team.team_name'
-//             ],
-//             'avatar',
-//             'memo:ntext',
-//             [
-//             'attribute' => 'status',
-//             'value' => function ($model) {
-//                 return $model->status == $model::STATUS_ACTIVE? Yii::t('app', 'Active') : Yii::t('app', 'Inactive') ;
-//             }
-//             ],
+            'full_time',
+            // 'memo:ntext',
             [
 //             'header' => Yii::t('app', 'Change status'),
                 'attribute' => 'status',
                 'value' => function ($model) {
                     if ($model->status == $model::STATUS_INACTIVE) {
-                        return Html::a(Yii::t('app', 'Unblock'), ['block', 'id' => $model->uid], [
+                        return Html::a(Yii::t('app', 'Unblock'), ['block', 'id' => $model->match_id], [
                                 'class' => 'btn btn-xs btn-success btn-block',
                                 'data-method' => 'post',
                                 'data-confirm' => Yii::t('app', 'Are you sure you want to unblock this user?')
                         ]);
                     } else if($model->status == $model::STATUS_ACTIVE){
-                        return Html::a(Yii::t('app', 'Block'), ['block', 'id' => $model->uid], [
+                        return Html::a(Yii::t('app', 'Block'), ['block', 'id' => $model->match_id], [
                                 'class' => 'btn btn-xs btn-danger btn-block',
                                 'data-method' => 'post',
                                 'data-confirm' => Yii::t('app', 'Are you sure you want to block this user?')
                         ]);
                     }else if($model->status == $model::STATUS_DELETED){
-                        return Html::a(Yii::t('app', 'Revert'), ['revert', 'id' => $model->uid], [
+                        return Html::a(Yii::t('app', 'Revert'), ['revert', 'id' => $model->match_id], [
                                 'class' => 'btn btn-xs btn-warning btn-block',
                                 'data-method' => 'post',
                                 'data-confirm' => Yii::t('app', 'Are you sure you want to revert this user?')
@@ -128,8 +114,4 @@ if (Yii::$app->controller->action->id == 'trash') {
             ],
         ],
     ]); ?>
-    
-    <?php Pjax::end() ?>
-    <?= Html::endForm(); ?>
-
-</div>
+<?php Pjax::end(); ?> <?= Html::endForm(); ?></div>
