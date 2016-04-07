@@ -188,7 +188,7 @@ class m150906_023806_create_pandora_init_tables extends Migration
         
         $this->execute('SET foreign_key_checks = 0');
         $this->addForeignKey('fk_mp_match_info_7949_00','{{%fee_info}}', 'match_id', '{{%match_info}}', 'match_id', 'RESTRICT', 'CASCADE' );
-        $this->addForeignKey('fk_mp_match_info_7963_01','{{%judge_info}}', 'match_id', '{{%match_info}}', 'match_id', 'RESTRICT', 'CASCADE' );
+        $this->addForeignKey('fk_mp_match_info_7963_01','{{%judge_info}}', 'match_id', '{{%match_info}}', 'match_id', 'CASCADE', 'CASCADE' );
         $this->addForeignKey('fk_mp_area_info_7978_02','{{%match_info}}', 'area_id', '{{%area_info}}', 'area_id', 'RESTRICT', 'CASCADE' );
         $this->addForeignKey('fk_mp_team_info_7978_03','{{%match_info}}', 'home_id', '{{%team_info}}', 'team_id', 'RESTRICT', 'CASCADE' );
         $this->addForeignKey('fk_mp_team_info_7978_04','{{%match_info}}', 'visiters_id', '{{%team_info}}', 'team_id', 'RESTRICT', 'CASCADE' );
