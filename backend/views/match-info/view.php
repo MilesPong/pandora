@@ -36,6 +36,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'visiters_score',
             'hold_time:datetime',
             'full_time',
+            'judgeInfo.referee',
+            'judgeInfo.assistant',
+            'judgeInfo.lineman1',
+            'judgeInfo.lineman2',
             'memo:ntext',
             [
                 'attribute'=>'status',

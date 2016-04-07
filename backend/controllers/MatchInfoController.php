@@ -10,6 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use common\models\JudgeInfo;
+use yii\base\Model;
 
 /**
  * MatchInfoController implements the CRUD actions for MatchInfo model.
@@ -87,15 +89,30 @@ class MatchInfoController extends BackController
      */
     public function actionCreate()
     {
-        $model = new MatchInfo();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->match_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        $modelMatch = new MatchInfo();
+        $modelJudge = new JudgeInfo();
+        
+        $postData = Yii::$app->request->post();
+        
+        if ($modelMatch->load($postData) && $modelJudge->load($postData)
+            && Model::validateMultiple([$modelJudge, $modelMatch])) {
+            $transcation = Yii::$app->db->beginTransaction();
+            try {
+                $modelMatch->save(false);
+                $modelMatch = $this->findModel(Yii::$app->db->getLastInsertID());
+                $modelMatch->link('judgeInfo', $modelJudge);
+                $transcation->commit();
+                
+                return $this->redirect(['view', 'id' => $modelMatch->match_id]);
+            } catch (Exception $e) {
+                $transcation->rollBack();
+            }
         }
+        
+        return $this->render('create', [
+            'modelMatch' => $modelMatch,
+            'modelJudge' => $modelJudge,
+        ]);
     }
 
     /**
@@ -106,15 +123,30 @@ class MatchInfoController extends BackController
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->match_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $modelMatch = $this->findModel($id);
+        $modelJudge = JudgeInfo::findOne($id);
+        
+        $postData = Yii::$app->request->post();
+        
+        if ($modelMatch->load($postData) && $modelJudge->load($postData)
+            && Model::validateMultiple([$modelJudge, $modelMatch])) {
+            $transcation = Yii::$app->db->beginTransaction();
+            
+            try {
+                $modelMatch->save(false);
+                $modelMatch->link('judgeInfo', $modelJudge);
+                $transcation->commit();
+                
+                return $this->redirect(['view', 'id' => $modelMatch->match_id]);
+            } catch (Exception $e) {
+                $transcation->rollBack();
+            }
         }
+        
+        return $this->render('update', [
+            'modelMatch' => $modelMatch,
+            'modelJudge' => $modelJudge,
+        ]);
     }
 
     /**
