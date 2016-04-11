@@ -63,7 +63,7 @@ class m150906_023806_create_pandora_init_tables extends Migration
                 $this->createTable('{{%judge_info}}', [
                         'match_id' => 'INT(10) UNSIGNED NOT NULL',
                         0 => 'PRIMARY KEY (`match_id`)',
-                        'referee' => 'VARCHAR(25) NOT NULL',
+                        'referee' => 'VARCHAR(25) NULL',
                         'assistant' => 'VARCHAR(25) NULL',
                         'lineman1' => 'VARCHAR(25) NULL',
                         'lineman2' => 'VARCHAR(25) NULL',

@@ -31,7 +31,6 @@ class JudgeInfo extends \common\core\base\BaseModel
     public function rules()
     {
         return [
-            [['referee'], 'required'],
             [['match_id'], 'integer'],
             [['referee', 'assistant', 'lineman1', 'lineman2'], 'string', 'max' => 25],
             [['match_id'], 'unique'],
