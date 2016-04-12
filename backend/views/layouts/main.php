@@ -60,7 +60,8 @@ AppAsset::register($this);
                 ['label' => Yii::t('app', 'AreaInfo'), 'url' => ['/area-info']],
                 ['label' => Yii::t('app', 'PositionInfo'), 'url' => ['/position-info']],
                 ['label' => Yii::t('app', 'UserTeamInfo'), 'url' => ['/user-team-info']],
-                ['label' => Yii::t('app', 'MatchInfo'), 'url' => ['/match-info']]
+                ['label' => Yii::t('app', 'MatchInfo'), 'url' => ['/match-info']],
+                ['label' => Yii::t('app', 'FeeInfo'), 'url' => ['/fee-info']]
             ]
         ],
     ];

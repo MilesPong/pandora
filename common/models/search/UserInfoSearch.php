@@ -60,7 +60,8 @@ class UserInfoSearch extends UserInfo
 
         // convert unix timestamp
         if (!empty($this->birthday)) {
-            $this->birthday = strtotime($this->birthday);
+            // Compare UTC+8 time to UTC
+            $this->birthday = strtotime($this->birthday) + 8*60*60;
         }
         
         // join related table-1

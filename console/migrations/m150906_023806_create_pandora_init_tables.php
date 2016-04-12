@@ -1,6 +1,7 @@
 <?php
 
 use yii\db\Migration;
+use yii\db\Schema;
 
 class m150906_023806_create_pandora_init_tables extends Migration
 {
@@ -53,6 +54,8 @@ class m150906_023806_create_pandora_init_tables extends Migration
                         'remain' => 'MEDIUMINT(9) NULL',
                         'memo' => 'TEXT NOT NULL',
                         'status' => 'ENUM(\'-1\',\'0\',\'1\') NOT NULL DEFAULT \'1\'',
+                        'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+                        'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
                 ], $tableOptions_mysql);
             }
         }

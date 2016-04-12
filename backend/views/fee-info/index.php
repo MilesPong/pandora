@@ -24,7 +24,7 @@ if (Yii::$app->controller->action->id == 'trash') {
 <div class="fee-info-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php echo $this->render('_search', ['model' => $searchModel, 'envTrash' => $envTrash]); ?>
 
     <p>
         <?= Html::a(Yii::t('app', 'Create Fee Info'), ['create'], ['class' => 'btn btn-success']) ?>
@@ -39,41 +39,26 @@ if (Yii::$app->controller->action->id == 'trash') {
     
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//         'filterModel' => $searchModel,
         'columns' => [
 //             ['class' => 'yii\grid\SerialColumn'],
             ['class' => yii\grid\CheckboxColumn::className()],
             'fee_id',
             [
-                'attribute' => 'match.hold_time',
+                'label' => Yii::t('app', 'Match Info'),
                 'value' => function ($model) {
-                    if ($model->match->hold_time){
-                        return Yii::t('app', '{0, date, YYYY-MM-dd}', [$model->match->hold_time]);                    
+                    if ($model->match_id){
+                        return date('Y-m-d', $model->match->hold_time) . ' [' . $model->match->area->area_name . '] ' . 
+                $model->match->home->team_name . ' VS ' . $model->match->visiters->team_name;                    
                     }
                 },
-                'filter' => DatePicker::widget([
-                    'model'      => $searchModel,
-                    'attribute'  => 'match[hold_time]',
-                    'dateFormat' => 'php:Y-m-d',
-                    'options' => [
-                        'class' => 'form-control'
-                    ]
-                ]),
-            ],
-            [
-                'attribute' => 'match.home_id',
-                'value' => function ($model) {
-                    return $model->match->home->team_name;
-                },
-            ],
-            [
-                'attribute' => 'match.visiters_id',
-                'value' => 'match.visiters.team_name',
             ],
             'income',
             'expense',
             'remain',
-            // 'memo:ntext',
+            'memo:ntext',
+            'created_at:datetime',
+//             'updated_at:datetime',
             // 'status',
 
             [

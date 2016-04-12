@@ -19,7 +19,7 @@ return [
         ],
         'formatter' => [ 
                 'class' => 'yii\i18n\Formatter',
-                'dateFormat' => 'yyyy-MM-dd',
+                'dateFormat' => 'php:Y-m-d',
                 'datetimeFormat' => 'php:Y-m-d H:i:s',
                 'defaultTimeZone' => 'Asia/Shanghai',
                 'timeFormat' => 'php:H:i:s',

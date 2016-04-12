@@ -18,8 +18,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'expense')->textInput() ?>
 
-    <?= $form->field($model, 'remain')->textInput() ?>
-
     <?= $form->field($model, 'memo')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'status')->dropDownList(Yii::$app->mapList->getStatusList(), ['prompt' => Yii::t('app', 'Default to Active')]) ?>

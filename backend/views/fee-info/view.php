@@ -31,13 +31,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'fee_id',
             [
                 'attribute' => 'match_id',
-                'value' => date('Y-m-d', $model->match->hold_time) . ' - ' . $model->match->home->team_name,
+                'value' => isset($model->match->hold_time) ? date('Y-m-d', $model->match->hold_time) . ' [' . $model->match->area->area_name . '] ' . 
+                $model->match->home->team_name . ' VS ' . $model->match->visiters->team_name : '',
             ],
             
             'income',
             'expense',
             'remain',
             'memo:ntext',
+            'created_at:datetime',
+            'updated_at:datetime',
             [
                 'attribute'=>'status',
                 'value' => $model->status == $model::STATUS_ACTIVE ? 
