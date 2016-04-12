@@ -47,10 +47,10 @@ class m150906_023806_create_pandora_init_tables extends Migration
                 $this->createTable('{{%fee_info}}', [
                         'fee_id' => 'INT(10) UNSIGNED NOT NULL AUTO_INCREMENT',
                         0 => 'PRIMARY KEY (`fee_id`)',
-                        'match_id' => 'INT(10) UNSIGNED NOT NULL',
-                        'income' => 'SMALLINT(5) UNSIGNED NOT NULL',
-                        'expense' => 'SMALLINT(5) UNSIGNED NOT NULL',
-                        'remain' => 'MEDIUMINT(9) NOT NULL',
+                        'match_id' => 'INT(10) UNSIGNED NULL',
+                        'income' => 'SMALLINT(5) UNSIGNED NULL',
+                        'expense' => 'SMALLINT(5) UNSIGNED NULL',
+                        'remain' => 'MEDIUMINT(9) NULL',
                         'memo' => 'TEXT NOT NULL',
                         'status' => 'ENUM(\'-1\',\'0\',\'1\') NOT NULL DEFAULT \'1\'',
                 ], $tableOptions_mysql);

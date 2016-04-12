@@ -9,6 +9,7 @@ use common\models\UserInfo;
 use common\core\base\BaseModel;
 use common\models\PositionInfo;
 use common\models\AreaInfo;
+use common\models\MatchInfo;
 
 /**
  * MapList is used to return map data of model for dropdownlist
@@ -54,6 +55,28 @@ class MapList extends Component
     {
         $model = PositionInfo::find()->asArray()->all();
         return ArrayHelper::map($model, 'position_id', 'position_name');
+    }
+    
+    /**
+     * Get map data of MatchInfo
+     *
+     * @return array
+     */
+    public function getMatchList()
+    {
+        $model = MatchInfo::find()->with(['area', 'home', 'visiters'])->asArray()->all();
+        $timeArray = ArrayHelper::map($model, 'match_id', 'hold_time');
+        $areaArray = ArrayHelper::map($model, 'match_id', 'area.area_name');
+        $homeArray = ArrayHelper::map($model, 'match_id', 'home.team_name');
+        $visitersArray = ArrayHelper::map($model, 'match_id', 'visiters.team_name');
+        
+        $return  = array();
+        foreach ($timeArray as $k=>$v) {
+            $return[$k] = date('Y-m-d', $timeArray[$k]) . ' [' . $areaArray[$k] . '] '. 
+                $homeArray[$k] . ' VS ' . $visitersArray[$k];
+        }
+        
+        return $return;
     }
     
     /**
